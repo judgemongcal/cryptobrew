@@ -49,7 +49,7 @@ body{
 
 h1{
     font-weight: 700;
-    font-size: 1.625rem;
+    font-size: 1.725rem;
 }
 
 h2{
@@ -68,6 +68,15 @@ p{
 .header{
     margin-top: 2.5rem;
     margin-bottom: 3rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#company-logo{
+    width: 30px;
+    margin-right: 0.2rem;
+
 }
 
 .greetings{
@@ -100,7 +109,7 @@ p{
     object-fit: cover;
     border-radius: 5px 5px 0 0;
   }
-  
+
 
   /* News */
 
