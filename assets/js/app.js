@@ -3,14 +3,14 @@ const newsSlide = document.querySelector('.swiper-wrapper');
 const newsAPIkey = 'Mt0V4THOHF3RqwmodajlbaijTAdVUS2r';
 
 const getNews = async (newsAPIKey) => {
-  const data = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=&sort=newest&api-key=${newsAPIKey}`);
+  const data = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=crypto-currency&sort=newest&api-key=${newsAPIKey}`);
   const result = await data.json();
   console.log(result);
   displayNews(result);
 };
 
 const displayNews = (res) => {
-  for(let i = 0; i < 8; i++){
+  for(let i = 0; i < 10; i++){
     const source = res.response.docs;
     const givenDate = source[i].pub_date;
     const date = new Date(givenDate);

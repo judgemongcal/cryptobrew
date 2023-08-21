@@ -100,6 +100,7 @@ p{
     justify-content: center;
     align-items: center;
     border-radius: 5px;
+    margin-bottom: -1rem;
   }
 
 .swiper-slide img {
@@ -121,6 +122,11 @@ p{
     padding: 1rem;
     margin-bottom: 1.5rem;
     text-align: justify;
+}
+
+.news-title{
+    text-align: left;
+    margin-bottom: 5px;
 }
 
 .news-details p{
