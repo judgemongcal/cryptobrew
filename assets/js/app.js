@@ -60,6 +60,6 @@ var swiper = new Swiper(".mySwiper", {
     dynamicBullets: true,
     clickable: true,
   },
-  loop: true
+  // loop: true
 });
 
