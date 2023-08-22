@@ -89,6 +89,17 @@ a{
 
 .greetings{
     margin-bottom: 2.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-btn{
+    padding: 12px 12px 6px 12px;
+    justify-content: center;
+    border-radius: 100%;
+    transition: all 0.3s ease-in;
 }
 
 
@@ -215,7 +226,7 @@ a{
     margin-left: 2px;
 }
 
-.newest:hover, .oldest:hover, .previous:hover, .next:hover {
+.newest:hover, .oldest:hover, .previous:hover, .next:hover, .main-btn:hover {
     transform: scale(1.03);
     color: var(--white);
     background-color: var(--primary);
