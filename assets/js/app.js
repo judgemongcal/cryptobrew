@@ -1,6 +1,7 @@
 const newsSlide = document.querySelector('.swiper-wrapper');
-// News API (NY Times)
-const newsAPIkey = 'Mt0V4THOHF3RqwmodajlbaijTAdVUS2r';
+
+// NEWS FEATURE
+const newsAPIkey = 'Mt0V4THOHF3RqwmodajlbaijTAdVUS2r'; /* NY Times API */
 
 const getNews = async (newsAPIKey) => {
   const data = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=crypto-currency&sort=newest&api-key=${newsAPIKey}`);
@@ -8,6 +9,7 @@ const getNews = async (newsAPIKey) => {
   console.log(result);
   displayNews(result);
 };
+
 
 const displayNews = (res) => {
   for(let i = 0; i < 10; i++){

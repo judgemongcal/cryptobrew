@@ -61,8 +61,16 @@ p{
     font-weight: 400;
 }
 
+a{
+    text-decoration: none;
+}
+
 .heavy{
     font-weight: 700;
+}
+
+.shadow-1 {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 
 .header{
@@ -142,6 +150,10 @@ p{
     margin-bottom: 3rem;
 }
 
+.see-news a{
+    color: var(--white);
+}
+
 .news-btn{
     width: 100%;
     padding: 0.5rem;
@@ -153,10 +165,58 @@ p{
     border-radius: 5px;
     background: rgb(69,160,245);
     background: linear-gradient(90deg, rgba(69,160,245,1) 0%, rgba(38,227,194,1) 100%);
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     transition:  all 0.3s ease-in-out;
 }
 
 .news-btn:hover{
     transform: scale(1.02);
+}
+
+/* News Page */
+
+.news-card {
+    background-color: var(--white);
+    border-radius: 5px;
+    margin-top: 1rem;
+    transition: all 0.3s ease-in;
+}
+
+.news-card:hover{
+    background-color: var(--primary);
+    color: var(--white);
+    transform: scale(1.03);
+}
+
+.news-card img{
+    width: 100%;
+}
+
+/* Filter */
+
+.filter{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 1rem auto 1.25rem auto;
+}
+
+.filter-btn{
+    display: flex;
+    align-items: center;
+    padding: 5px 7px;
+    border-radius: 5px;
+    transition: all 0.3s ease-in;
+}
+
+.filter-btn p {
+    font-size: 0.5rem;
+    font-weight: 400;
+    margin-left: 2px;
+}
+
+.newest:hover, .oldest:hover, .previous:hover, .next:hover {
+    transform: scale(1.03);
+    color: var(--white);
+    background-color: var(--primary);
 }
