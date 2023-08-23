@@ -1,20 +1,24 @@
 const global = {
   currentPath: window.location.pathname,
   currentPage: 0,
+  sorting: 'newest',
   newsApi: {
     apiKey: 'Mt0V4THOHF3RqwmodajlbaijTAdVUS2r'
   }
 };
 
-
 const indexNewsSlide = document.querySelector('.swiper-wrapper');
 const newsPageCard = document.querySelector('.news-container');
+const newsNewestBtn = document.querySelector('.newest');
+const newsOldestBtn = document.querySelector('.oldest');
+const newsNextBtn = document.querySelector('.next');
+const newsPrevBtn = document.querySelector('.previous');
 
 // Fetch News API
 const newsAPIkey = 'Mt0V4THOHF3RqwmodajlbaijTAdVUS2r'; /* NY Times API */
 
 const getNews = async () => {
-  const data = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=crypto-currency&sort=newest&api-key=${global.newsApi.apiKey}&page=${global.currentPage}`);
+  const data = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=crypto-currency&sort=${global.sorting}&api-key=${global.newsApi.apiKey}&page=${global.currentPage}`);
   const result = await data.json();
   console.log(result);
   return result;
