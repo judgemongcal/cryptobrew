@@ -114,6 +114,23 @@ const oldestFirst = async () => {
   displayNews(res);
 }
 
+// Pagination
+
+const showNextNews = async () => {
+  global.currentPage++;
+  const res = await getNews();
+  resetNews();
+  displayNews(res);
+}
+
+const showPrevNews = async () => {
+  global.currentPage--;
+  if(global.currentPage < 0) return;
+  const res = await getNews();
+  resetNews();
+  displayNews(res);
+}
+
 
   
 
@@ -126,6 +143,8 @@ const init = () => {
       displayNews(getNews());
       newsNewestBtn.addEventListener('click', newestFirst);
       newsOldestBtn.addEventListener('click', oldestFirst);
+      newsNextBtn.addEventListener('click', showNextNews);
+      newsPrevBtn.addEventListener('click', showPrevNews);
       break;
     case '/index.html': 
       displayNews(getNews());
