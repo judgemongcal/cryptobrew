@@ -134,10 +134,14 @@ const showPrevNews = async () => {
 }
 
 const checkButtons = () => {
-  switch(global.currentPage){
-    case 0: newsPrevBtn.disabled = true;
-            newsPrevBtn.style.pointerEvents = 'none';
-  }
+  if(global.currentPage <= 0){
+    newsPrevBtn.disabled = true;
+    newsPrevBtn.style.pointerEvents = 'none';
+    } else if (global.currentPage > 0) {
+      newsPrevBtn.disabled = false;
+      newsPrevBtn.style.pointerEvents = 'auto';
+    }
+  return;
 }
 
 
