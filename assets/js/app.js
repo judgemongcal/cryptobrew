@@ -11,6 +11,7 @@ const global = {
   currentPage: 0,
   sorting: 'newest',
   startDate: '2022-01-01', 
+  isLastPage: false,
   endDate: today.toISOString().split('T')[0],
   newsApi: {
     apiKey: 'Mt0V4THOHF3RqwmodajlbaijTAdVUS2r'
@@ -21,14 +22,18 @@ const global = {
 
 
 
-console.log(today);
+
 // Fetch News API
 const newsAPIkey = 'Mt0V4THOHF3RqwmodajlbaijTAdVUS2r'; /* NY Times API */
 
 const getNews = async () => {
   const data = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=crypto-currency&sort=${global.sorting}&api-key=${global.newsApi.apiKey}&begin_date=${global.startDate}&end_date=${global.endDate}&page=${global.currentPage}`);
   const result = await data.json();
-  console.log(result);
+  if(result.response.docs.length < 10){
+    global.isLastPage = true;
+  } else {
+    global.isLastPage = false;
+  }
   return result;
 };
 
@@ -37,7 +42,6 @@ const getNews = async () => {
 
 const displayNews = async (result) => {
   const res = await result;
-  console.log(res);
   for(let i = 0; i < res.response.docs.length; i++){
     const source = res.response.docs;
     const givenDate = source[i].pub_date;
@@ -119,21 +123,25 @@ const oldestFirst = async () => {
 const showNextNews = async () => {
   global.currentPage++;
   const res = await getNews();
+  checkButtons();
+  if(res.response.docs.length === 0) return;
   resetNews();
   displayNews(res);
-  checkButtons();
+  
 }
 
 const showPrevNews = async () => {
   global.currentPage--;
   if(global.currentPage < 0) return;
   const res = await getNews();
+  checkButtons();
   resetNews();
   displayNews(res);
-  checkButtons();
+  
 }
 
 const checkButtons = () => {
+  // Prev Button
   if(global.currentPage <= 0){
     newsPrevBtn.disabled = true;
     newsPrevBtn.style.pointerEvents = 'none';
@@ -141,8 +149,22 @@ const checkButtons = () => {
       newsPrevBtn.disabled = false;
       newsPrevBtn.style.pointerEvents = 'auto';
     }
-  return;
-}
+  
+  // Next Button
+    if(global.isLastPage){
+      newsNextBtn.disabled = true;
+      newsNextBtn.style.pointerEvents = 'none';
+    } else{
+      newsNextBtn.disabled = false;
+      newsNextBtn.style.pointerEvents = 'auto';
+    }
+  
+
+};
+
+// const checkNextButton = () => {
+  
+// }
 
 
   
