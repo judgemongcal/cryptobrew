@@ -121,6 +121,7 @@ const showNextNews = async () => {
   const res = await getNews();
   resetNews();
   displayNews(res);
+  checkButtons();
 }
 
 const showPrevNews = async () => {
@@ -129,6 +130,14 @@ const showPrevNews = async () => {
   const res = await getNews();
   resetNews();
   displayNews(res);
+  checkButtons();
+}
+
+const checkButtons = () => {
+  switch(global.currentPage){
+    case 0: newsPrevBtn.disabled = true;
+            newsPrevBtn.style.pointerEvents = 'none';
+  }
 }
 
 
@@ -145,6 +154,7 @@ const init = () => {
       newsOldestBtn.addEventListener('click', oldestFirst);
       newsNextBtn.addEventListener('click', showNextNews);
       newsPrevBtn.addEventListener('click', showPrevNews);
+      checkButtons();
       break;
     case '/index.html': 
       displayNews(getNews());
