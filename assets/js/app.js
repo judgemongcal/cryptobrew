@@ -107,6 +107,7 @@ const resetNews = () => {
 const newestFirst = async () => {
   global.sorting = 'newest';
   const res = await getNews();
+  global.currentPage = 0;
   resetNews();
   displayNews(res);
 }
@@ -114,6 +115,7 @@ const newestFirst = async () => {
 const oldestFirst = async () => {
   global.sorting = 'oldest';
   const res = await getNews();
+  global.currentPage = 0;
   resetNews();
   displayNews(res);
 }
@@ -174,6 +176,9 @@ const checkButtons = () => {
 const init = () => {
   console.log(global.currentPath);
   switch(global.currentPath) {
+    case '/index.html': 
+      displayNews(getNews());
+      break;
     case '/news.html': 
       displayNews(getNews());
       newsNewestBtn.addEventListener('click', newestFirst);
@@ -181,9 +186,6 @@ const init = () => {
       newsNextBtn.addEventListener('click', showNextNews);
       newsPrevBtn.addEventListener('click', showPrevNews);
       checkButtons();
-      break;
-    case '/index.html': 
-      displayNews(getNews());
       break;
   }
 }
