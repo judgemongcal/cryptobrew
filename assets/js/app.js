@@ -34,6 +34,7 @@ const getNews = async () => {
   } else {
     global.isLastPage = false;
   }
+  console.log(result);
   return result;
 };
 
@@ -61,13 +62,14 @@ const displayNews = async (result) => {
     switch(global.currentPath){
       case '/index.html':
         div.classList.add('swiper-slide');
+        console.log(source[i]._id);
         div.innerHTML = `
         <div class="swiper-slide">
         ${
           source[i].multimedia[22]? `<img src="https://www.nytimes.com/${source[i].multimedia[22].url}" alt="">` :
           `<img src="./assets/images/image_pholder.webp" alt="">`
         }
-        <div class="news-details">
+        <div class="news-details" id="${source[i]._id}">
           <h2 class="news-title">${source[i].headline.main}</h2>
           <p id="news-date" class="heavy">${finalDate}</p>
           <p id="news-date" class="heavy">${source[i].source}</p>
