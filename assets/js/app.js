@@ -62,7 +62,6 @@ const displayNews = async (result) => {
     switch(global.currentPath){
       case '/index.html':
         div.classList.add('swiper-slide');
-        console.log(source[i]._id);
         div.innerHTML = `
         <div class="swiper-slide">
         ${
@@ -83,7 +82,7 @@ const displayNews = async (result) => {
       case '/news.html':
         div.classList.add('news-card', 'shadow-1');
         div.innerHTML = `
-          <div class="news-details">
+          <div class="news-details" id="${source[i]._id}">
               ${source[i].multimedia[22]? `<img src="https://www.nytimes.com/${source[i].multimedia[22].url}" alt="">` :
           `<img src="./assets/images/image_pholder.webp" alt="">`}
               <h2 class="news-title">${source[i].headline.main}</h2>
