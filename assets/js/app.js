@@ -71,7 +71,7 @@ const displayNews = async (result) => {
         <div class="news-details" id="${source[i]._id}">
           <h2 class="news-title">${source[i].headline.main}</h2>
           <p id="news-date" class="heavy">${finalDate}</p>
-          <p id="news-date" class="heavy">${source[i].source}</p>
+          <p id="news-source" class="heavy">${source[i].source}</p>
           <p id="news-summary">${source[i].abstract}</p>
       </div>
         `;
@@ -87,7 +87,7 @@ const displayNews = async (result) => {
           `<img src="./assets/images/image_pholder.webp" alt="">`}
               <h2 class="news-title">${source[i].headline.main}</h2>
               <p id="news-date" class="heavy">${finalDate}</p>
-              <p id="news-date" class="heavy">${source[i].source}</p>
+              <p id="news-source" class="heavy">${source[i].source}</p>
               <p id="news-summary">${source[i].abstract}</p>
           </div>
         `;
