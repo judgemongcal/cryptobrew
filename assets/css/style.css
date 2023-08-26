@@ -8,6 +8,7 @@
     --white: rgba(239, 253, 255, 1);
     --shadow: rgba(0, 0, 0, 10%);
     --red: rgba(191,29,41,1);
+    --dark-red: rgb(114, 18, 25);
 }
 
 *,
@@ -252,7 +253,7 @@ button{
     z-index: 1;
     top: 0;
     left: 0;
-    display: flex;
+    display: none;
     align-items: center;
     transition: all 0.4s ease-out;
 }
@@ -274,6 +275,11 @@ button{
     border-radius: 100%;
     background-color: var(--red);
     margin: -1rem auto 1.5rem auto;
+    transition: all 0.3s ease-in;
+}
+
+.exit-modal:hover{
+    background-color: var(--dark-red);
 }
 
 

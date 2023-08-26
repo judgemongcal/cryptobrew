@@ -33,9 +33,11 @@ const newsAPIkey = 'Mt0V4THOHF3RqwmodajlbaijTAdVUS2r'; /* NY Times API */
 const getNews = async () => {
   let data;
  if(global.news_id){
-  // data = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=crypto-currency&sort=${global.sorting}&api-key=${global.newsApi.apiKey}&`);
+  data = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?&api-key=${global.newsApi.apiKey}&fq=_id:("${global.news_id}")`);
+  console.log('Yah');
  } else{
   data = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=crypto-currency&sort=${global.sorting}&api-key=${global.newsApi.apiKey}&begin_date=${global.startDate}&end_date=${global.endDate}&page=${global.currentPage}`);
+  console.log('Not');
  }
   const result = await data.json();
   if(result.response.docs.length < 10){
@@ -77,7 +79,7 @@ const displayNews = async (result) => {
           source[i].multimedia[22]? `<img src="https://www.nytimes.com/${source[i].multimedia[22].url}" alt="">` :
           `<img src="./assets/images/image_pholder.webp" alt="">`
         }
-        <div class="news-details" id="${source[i]._id}">
+        <div class="news-details" id="${source[i].uri}">
           <h2 class="news-title">${source[i].headline.main}</h2>
           <p id="news-date" class="heavy">${finalDate}</p>
           <p id="news-source" class="heavy">${source[i].source}</p>
@@ -89,9 +91,32 @@ const displayNews = async (result) => {
         break;
 
       case '/news.html':
-        div.classList.add('news-card', 'shadow-1');
+        if(global.news_id){
+          div.classList.add('modal-content');
+          div.innerHTML = `
+          <button class="exit-modal shadow-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                  </svg>
+            </button>
+            <div class="modal-news-content">
+            ${source[i].multimedia[22]? `<img src="https://www.nytimes.com/${source[i].multimedia[22].url}" alt="">` :
+            `<img src="./assets/images/image_pholder.webp" alt="">`}
+                <h2 class="news-title">${source[i].headline.main}</h2>
+                <p id="news-date" class="heavy">${finalDate}</p>
+                <p id="news-source" class="heavy">${source[i].source}</p>
+                <p id="news-summary">${source[i].snippet}</p>
+                <button class="view-source-btn heavy shadow-1 gradient-btn">
+                    <a href="${source[i].web_url}" target="_blank">VIEW SOURCE</a>
+                </button>
+            </div>
+          `;
+          modalEl.appendChild(div);
+          break;
+        } else{
+          div.classList.add('news-card', 'shadow-1');
         div.innerHTML = `
-          <div class="news-details" id="${source[i]._id}">
+          <div class="news-details" id="${source[i].uri}">
               ${source[i].multimedia[22]? `<img src="https://www.nytimes.com/${source[i].multimedia[22].url}" alt="">` :
           `<img src="./assets/images/image_pholder.webp" alt="">`}
               <h2 class="news-title">${source[i].headline.main}</h2>
@@ -103,6 +128,7 @@ const displayNews = async (result) => {
         newsPageContainer.appendChild(div);
         break;
     };
+        }
 
   }
 };
@@ -176,17 +202,21 @@ const checkButtons = () => {
 
 // Modal
 
-const toggleModal = () => {
-  if(modalEl.style.display = 'flex'){
-    modalEl.style.display = 'none'
-  } else{
-    modalEl.style.display = 'flex';
-  }
-}
+const exitModal = () => {
+  modalEl.style.display = 'none';
+};
 
-const showTarget = async (e) => {
+const showModal = async (e) => {
+  console.log(e.target);
+  e.target.id.includes('nyt')? global.news_id = e.target.id :
   global.news_id = e.target.parentElement.id;
+
+  console.log(global.news_id);
+  modalEl.innerHTML = '';
   const res = await getNews();
+  displayNews(res);
+  modalEl.style.display = 'flex';
+  console.log(modalEl.style.display);
 }
 
 
@@ -206,9 +236,8 @@ const init = () => {
       newsOldestBtn.addEventListener('click', oldestFirst);
       newsNextBtn.addEventListener('click', showNextNews);
       newsPrevBtn.addEventListener('click', showPrevNews);
-      modalExitBtn.addEventListener('click', toggleModal);
-      newsPageContainer.addEventListener('click', showTarget)
-
+      newsPageContainer.addEventListener('click', showModal);
+      // modalExitBtn.addEventListener('click', exitModal);
       checkButtons();
       break;
   }
