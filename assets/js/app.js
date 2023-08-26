@@ -4,6 +4,8 @@ const newsNewestBtn = document.querySelector('.newest');
 const newsOldestBtn = document.querySelector('.oldest');
 const newsNextBtn = document.querySelector('.next');
 const newsPrevBtn = document.querySelector('.previous');
+const modalExitBtn = document.querySelector('.exit-modal');
+const modalEl = document.querySelector('.news-modal');
 const today = new Date();
 
 const global = {
@@ -165,9 +167,13 @@ const checkButtons = () => {
 
 };
 
-// const checkNextButton = () => {
-  
-// }
+// Modal
+
+const toggleModal = () => {
+  modalEl.style.display = 'flex' ? 
+  modalEl.style.opacity = 0
+  : console.log('show modal');
+}
 
 
   
@@ -186,6 +192,7 @@ const init = () => {
       newsOldestBtn.addEventListener('click', oldestFirst);
       newsNextBtn.addEventListener('click', showNextNews);
       newsPrevBtn.addEventListener('click', showPrevNews);
+      modalExitBtn.addEventListener('click', toggleModal);
       checkButtons();
       break;
   }
