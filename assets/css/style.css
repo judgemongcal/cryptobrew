@@ -171,10 +171,10 @@ button{
     color: var(--white);
 }
 
-.news-btn{
+
+.gradient-btn{
     width: 100%;
-    padding: 0.5rem;
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     color: var(--white);
     letter-spacing: 1px;
     font-family: 'Space Grotesk', 'sans-serif';
@@ -185,7 +185,11 @@ button{
     transition:  all 0.3s ease-in-out;
 }
 
-.news-btn:hover{
+.news-btn{
+    padding: 1rem 2rem;
+}
+
+.gradient-btn:hover{
     transform: scale(1.02);
 }
 
@@ -276,6 +280,16 @@ button{
 .exit-modal svg path{
     stroke: var(--white);
     stroke-width: 2px;
+}
+
+.view-source-btn{
+    margin-top: 2rem;
+    width: 100%;
+    padding: 0.8rem 0.5rem;
+}
+
+.view-source-btn a{
+    color: var(--white);
 }
 
 

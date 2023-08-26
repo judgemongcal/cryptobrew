@@ -4,13 +4,15 @@ const newsNewestBtn = document.querySelector('.newest');
 const newsOldestBtn = document.querySelector('.oldest');
 const newsNextBtn = document.querySelector('.next');
 const newsPrevBtn = document.querySelector('.previous');
-const modalExitBtn = document.querySelector('.exit-modal');
 const modalEl = document.querySelector('.news-modal');
+let newsCard = '';
+const modalExitBtn = document.querySelector('.exit-modal');
 const today = new Date();
 
 const global = {
   currentPath: window.location.pathname,
   currentPage: 0,
+  news_id: '',
   sorting: 'newest',
   startDate: '2022-01-01', 
   isLastPage: false,
@@ -29,7 +31,12 @@ const global = {
 const newsAPIkey = 'Mt0V4THOHF3RqwmodajlbaijTAdVUS2r'; /* NY Times API */
 
 const getNews = async () => {
-  const data = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=crypto-currency&sort=${global.sorting}&api-key=${global.newsApi.apiKey}&begin_date=${global.startDate}&end_date=${global.endDate}&page=${global.currentPage}`);
+  let data;
+ if(global.news_id){
+  // data = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=crypto-currency&sort=${global.sorting}&api-key=${global.newsApi.apiKey}&`);
+ } else{
+  data = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=crypto-currency&sort=${global.sorting}&api-key=${global.newsApi.apiKey}&begin_date=${global.startDate}&end_date=${global.endDate}&page=${global.currentPage}`);
+ }
   const result = await data.json();
   if(result.response.docs.length < 10){
     global.isLastPage = true;
@@ -170,9 +177,16 @@ const checkButtons = () => {
 // Modal
 
 const toggleModal = () => {
-  modalEl.style.display = 'flex' ? 
-  modalEl.style.opacity = 0
-  : console.log('show modal');
+  if(modalEl.style.display = 'flex'){
+    modalEl.style.display = 'none'
+  } else{
+    modalEl.style.display = 'flex';
+  }
+}
+
+const showTarget = async (e) => {
+  global.news_id = e.target.parentElement.id;
+  const res = await getNews();
 }
 
 
@@ -193,6 +207,8 @@ const init = () => {
       newsNextBtn.addEventListener('click', showNextNews);
       newsPrevBtn.addEventListener('click', showPrevNews);
       modalExitBtn.addEventListener('click', toggleModal);
+      newsPageContainer.addEventListener('click', showTarget)
+
       checkButtons();
       break;
   }
