@@ -5,8 +5,7 @@ const newsOldestBtn = document.querySelector('.oldest');
 const newsNextBtn = document.querySelector('.next');
 const newsPrevBtn = document.querySelector('.previous');
 const modalEl = document.querySelector('.news-modal');
-let newsCard = '';
-const modalExitBtn = document.querySelector('.exit-modal');
+// let modalExitBtn = document.querySelector('.exit-modal');
 const today = new Date();
 
 const global = {
@@ -34,10 +33,10 @@ const getNews = async () => {
   let data;
  if(global.news_id){
   data = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?&api-key=${global.newsApi.apiKey}&fq=_id:("${global.news_id}")`);
-  console.log('Yah');
+
  } else{
   data = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=crypto-currency&sort=${global.sorting}&api-key=${global.newsApi.apiKey}&begin_date=${global.startDate}&end_date=${global.endDate}&page=${global.currentPage}`);
-  console.log('Not');
+
  }
   const result = await data.json();
   if(result.response.docs.length < 10){
@@ -94,15 +93,16 @@ const displayNews = async (result) => {
         if(global.news_id){
           div.classList.add('modal-content');
           div.innerHTML = `
-          <button class="exit-modal shadow-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+          <button class="exit-modal shadow-1 exit">
+                <svg class="exit" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                    <path class ="exit" d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
                   </svg>
             </button>
             <div class="modal-news-content">
+            <h1 class="news-title">${source[i].headline.main}</h1>
             ${source[i].multimedia[22]? `<img src="https://www.nytimes.com/${source[i].multimedia[22].url}" alt="">` :
             `<img src="./assets/images/image_pholder.webp" alt="">`}
-                <h2 class="news-title">${source[i].headline.main}</h2>
+                
                 <p id="news-date" class="heavy">${finalDate}</p>
                 <p id="news-source" class="heavy">${source[i].source}</p>
                 <p id="news-summary">${source[i].snippet}</p>
@@ -206,6 +206,7 @@ const exitModal = () => {
   modalEl.style.display = 'none';
 };
 
+
 const showModal = async (e) => {
   console.log(e.target);
   e.target.id.includes('nyt')? global.news_id = e.target.id :
@@ -217,6 +218,8 @@ const showModal = async (e) => {
   displayNews(res);
   modalEl.style.display = 'flex';
   console.log(modalEl.style.display);
+
+
 }
 
 
@@ -237,8 +240,14 @@ const init = () => {
       newsNextBtn.addEventListener('click', showNextNews);
       newsPrevBtn.addEventListener('click', showPrevNews);
       newsPageContainer.addEventListener('click', showModal);
-      // modalExitBtn.addEventListener('click', exitModal);
+      // modalExitBtn.add
+      // console.log(modalExitBtn);
+      // showModal();
       checkButtons();
+      document.addEventListener('click', (e) => {
+        console.log(e.target);
+        if(e.target.classList.contains('exit')) exitModal();
+      })
       break;
   }
 }

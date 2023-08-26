@@ -282,6 +282,11 @@ button{
     background-color: var(--dark-red);
 }
 
+.modal-news-content h1{
+    margin-top: 4rem;
+    font-size: 1.7rem;
+}
+
 
 .exit-modal svg path{
     stroke: var(--white);
