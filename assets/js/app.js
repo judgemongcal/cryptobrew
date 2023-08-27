@@ -277,15 +277,19 @@ var swiper = new Swiper(".mySwiper", {
       slidesPerView: 2,
       spaceBetween: 20
     },
+    980: {
+      slidesPerView: 3,
+      spaceBetween: 30
+    }
+
+  },
   pagination: {
     el: ".swiper-pagination",
     dynamicBullets: true,
     clickable: true,
   },
  
-  }
-  // loop: true
-});
+  });
 
 
 
