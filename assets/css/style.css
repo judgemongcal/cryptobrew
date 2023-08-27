@@ -162,7 +162,7 @@ button{
 }  
 
 .news-details{
-    padding: 1rem;
+    padding: 2rem;
     margin-bottom: 2rem;
     text-align: justify;
 }
@@ -322,6 +322,7 @@ button{
 
 /* Media Queries */
 
+
 /* Tablet View */
 
 @media(min-width: 40rem){
@@ -343,6 +344,51 @@ button{
 .greetings h2{
     font-size: 1.75rem;
 }
+
+/* News Page */
+
+.main-btn{
+    padding: 20px 20px 15px 20px;
+
+}
+
+/* Filter */
+
+
+.filter-btn{
+    padding: 10px 20px;
+}
+
+.filter-btn p {
+    font-size: 1.05rem;
+    margin-left: 4px;
+}
+
+svg{
+    width: 25px;
+    height: 25px;
+}
+
+.news-container{
+}
+
+.news-container h2{
+    font-size: 1.75rem;
+    margin: 0.5rem auto;
+}
+
+.news-container p {
+    font-size: 1rem;
+}
+
+.news-card {
+    margin-bottom: 2rem;
+}
+
+.news-details{
+    padding: 2rem;
+}
+
 
 }
 
