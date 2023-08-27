@@ -272,11 +272,20 @@ init();
 var swiper = new Swiper(".mySwiper", {
   slidesPerView: 1,
   spaceBetween: 10,
+  breakpoints: {
+    650: {
+      slidesPerView: 2,
+      spaceBetween: 20
+    },
   pagination: {
     el: ".swiper-pagination",
     dynamicBullets: true,
     clickable: true,
   },
+ 
+  }
   // loop: true
 });
+
+
 
