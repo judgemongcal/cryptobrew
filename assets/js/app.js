@@ -44,7 +44,6 @@ const getNews = async () => {
   } else {
     global.isLastPage = false;
   }
-  console.log(result);
   return result;
 };
 
@@ -240,9 +239,6 @@ const init = () => {
       newsNextBtn.addEventListener('click', showNextNews);
       newsPrevBtn.addEventListener('click', showPrevNews);
       newsPageContainer.addEventListener('click', showModal);
-      // modalExitBtn.add
-      // console.log(modalExitBtn);
-      // showModal();
       checkButtons();
       document.addEventListener('click', (e) => {
         console.log(e.target);

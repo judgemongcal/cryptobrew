@@ -232,11 +232,17 @@ button{
 /* Filter */
 
 .filter{
-    display: flex;
+    /* display: flex;
     flex-direction: row;
     justify-content: space-between;
-    gap: 10px;
+    gap: 10px; */
     margin: 1rem auto 1.25rem auto;
+
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 0.5fr 0.5fr;
+    gap: 0.5rem;
+
 }
 
 .filter-btn{
@@ -245,6 +251,7 @@ button{
     padding: 5px 10px;
     border-radius: 5px;
     transition: all 0.3s ease-in;
+    justify-content: center;
 }
 
 .filter-btn p {
@@ -252,6 +259,7 @@ button{
     font-weight: 400;
     margin-left: 2px;
 }
+
 
 .newest:hover, .oldest:hover, .previous:hover, .next:hover, .main-btn:hover {
     transform: scale(1.03);
@@ -354,7 +362,11 @@ button{
 
 /* Filter */
 
-
+.filter{
+    display: grid;
+    grid-template-columns: 1fr 1fr 0.5fr 0.5fr;
+    gap: 2rem;
+}
 .filter-btn{
     padding: 10px 20px;
 }
@@ -370,7 +382,11 @@ svg{
 }
 
 .news-container{
-}
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1.5rem;
+} 
+
 
 .news-container h2{
     font-size: 1.75rem;
@@ -388,6 +404,8 @@ svg{
 .news-details{
     padding: 2rem;
 }
+
+
 
 
 }
@@ -411,6 +429,32 @@ svg{
 
 .greetings h2{
     font-size: 2.5rem;
+}
+
+/* News Page */
+
+.greetings, .header, .news-main-container{
+    width: 55rem;
+    margin: auto;
+}
+
+.header{
+    margin: 3rem auto 5rem auto;
+}
+
+.greetings{
+    margin-bottom: 2rem;
+}
+
+/* Filter */
+
+
+.filter-btn p{
+    font-size: 1.25rem;
+}
+.filter svg{
+    width: 25px;
+    height: 25px;
 }
 
 }
