@@ -405,8 +405,25 @@ svg{
     padding: 2rem;
 }
 
+/* Modal */
 
+.news-modal{
+    justify-content: center;
+}
 
+.modal-content{
+    width: 30rem;
+}
+
+.news-modal h1{
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.news-modal p{
+    font-size: 1.25rem;
+    margin-top: 0.5rem;
+}
 
 }
 
@@ -455,6 +472,27 @@ svg{
 .filter svg{
     width: 25px;
     height: 25px;
+}
+
+/* Modal */
+
+.news-modal{
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content{
+    width: 40rem;
+}
+
+.news-modal h1{
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.news-modal p{
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
 }
 
 }
