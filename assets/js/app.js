@@ -221,6 +221,15 @@ const showModal = async (e) => {
 
 }
 
+// Trending Feature
+
+const getTrending = async () => {
+    const data = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=7&page=1');
+    const res = await data.json();
+    console.log(res);
+    return res;
+}
+
 
   
 
@@ -231,6 +240,7 @@ const init = () => {
   switch(global.currentPath) {
     case '/index.html': 
       displayNews(getNews());
+      getTrending();
       break;
     case '/news.html': 
       displayNews(getNews());
