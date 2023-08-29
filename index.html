@@ -31,8 +31,65 @@
                 <a href="news.html">SEE MORE</a>
                 </button>
         </div>
+        <div class="trending-container">
+            <div class="grid-1">
+                <p>Grid 1</p>
+            </div>
+            <div class="grid-2">
+                <p>Grid 2</p>
+            </div>
+            <div class="grid-3">
+                <p>Grid 3</p>
+            </div>
+            <div class="grid-4">
+                <p>Grid 4</p>
+            </div>
+            <div class="grid-5">
+                <p>Grid 5</p>
+            </div>
+            <div class="grid-6">
+                <p>Grid 6</p>
+            </div>
+            <div class="grid-7">
+                <p>Grid 7</p>
+            </div>
+        </div>
 
     </div>
     
+<style>
+
+    .trending-container{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 2.5fr 1.25fr 0.6fr 0.4fr;
+    }
+
+    .grid-1{
+        background-color: blue;
+        grid-column: span 2;
+    }
+    .grid-2{
+        background-color: green;
+        grid-column: 0/1;
+    }
+    .grid-3{
+        background-color: red;
+        grid-column: 2 / 3;
+    }
+    .grid-4{
+        background-color: orange;
+    }
+    .grid-5{
+        background-color: cyan;
+    }
+    .grid-6{
+        background-color: rgb(174, 77, 174);
+    }
+    .grid-7{
+        background-color: cornflowerblue;
+    }
+</style>
+
 </body>
 </html>
