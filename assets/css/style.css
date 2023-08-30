@@ -212,6 +212,42 @@ button{
 
 /* Trending Feature */
 
+.trending-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 2.5fr 1.25fr 0.6fr 0.4fr;
+    gap: 0.75rem;
+    margin-bottom: 3rem;
+}
+
+.trending-container > div {
+    
+}
+
+.grid-1{
+    background-color: blue;
+    grid-column: span 2;
+}
+.grid-2{
+    background-color: green;
+    grid-column: 0/1;
+}
+.grid-3{
+    background-color: red;
+    grid-column: 2 / 3;
+}
+.grid-4{
+    background-color: orange;
+}
+.grid-5{
+    background-color: cyan;
+}
+.grid-6{
+    background-color: rgb(174, 77, 174);
+}
+.grid-7{
+    background-color: cornflowerblue;
+}
 
 
 
