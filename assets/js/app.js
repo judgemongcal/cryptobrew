@@ -226,8 +226,10 @@ const showModal = async (e) => {
 const getTrending = async () => {
     const data = await fetch('https://api.coingecko.com/api/v3/search/trending');
     const res = await data.json();
-    console.log(res);
-    return res;
+    const btcPrice = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')
+    const price = await btcPrice.json();
+    console.log(res, price);
+    return res, price;
 }
 
 
