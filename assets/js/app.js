@@ -5,6 +5,7 @@ const newsOldestBtn = document.querySelector('.oldest');
 const newsNextBtn = document.querySelector('.next');
 const newsPrevBtn = document.querySelector('.previous');
 const modalEl = document.querySelector('.news-modal');
+const trendingContainer = document.querySelector('.trending-container');
 // let modalExitBtn = document.querySelector('.exit-modal');
 const today = new Date();
 
@@ -223,13 +224,41 @@ const showModal = async (e) => {
 
 // Trending Feature
 
+// Get Trending Coins and BTC price from Coingecko API
 const getTrending = async () => {
     const data = await fetch('https://api.coingecko.com/api/v3/search/trending');
     const res = await data.json();
     const btcPrice = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')
     const price = await btcPrice.json();
     console.log(res, price);
-    return res, price;
+    displayTrending(res, price);
+}
+
+// Display Trending Coins to DOM
+const displayTrending = (trending, btc) => {
+  const btcPrice = btc.bitcoin.usd;
+  
+  for(let i = 0; i < trending.coins.length; i++){
+    const div = document.createElement('div');
+    console.log(trending.coins[i].item.name);
+    div.classList.add(`grid-card`,`grid-${i+1}`, `shadow-1`);
+    div.innerHTML = `
+    <h1 class="rank">#${i + 1}</h1>
+    <div class="coin-img">
+      <img src="${trending.coins[i].item.small}" alt="">
+    </div>
+    <div class="coin-details">
+      <h2>${trending.coins[i].item.name} (${trending.coins[i].item.symbol})</h2>
+      <p class="heavy">$${trending.coins[i].item.price_btc * btcPrice < 10? (trending.coins[i].item.price_btc * btcPrice).toFixed(4)
+            : parseInt((trending.coins[i].item.price_btc * btcPrice).toFixed(2)).toLocaleString()
+            }</p>
+      <p>Market Cap Rank: ${trending.coins[i].item.market_cap_rank}</p>
+    </div>
+    `
+    trendingContainer.appendChild(div);
+  }
+
+
 }
 
 
