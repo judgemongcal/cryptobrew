@@ -2,6 +2,7 @@
 
 :root{
     --primary: rgba(69, 160, 245, 1);
+    --primary2: rgba(212,179,127, 1);
     --secondary: rgba(38, 227, 194, 1);
     --tertiary: rgba(231, 138, 0, 1);
     --black: rgba(11, 10, 10, 1);
@@ -79,6 +80,7 @@ button{
 .shadow-1 {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
+
 
 .index-container{
     display: flex;
@@ -228,6 +230,8 @@ button{
     display: flex;
     border-radius: 5px;
     transition: background-color 0.4s ease-in, transform 0.3s ease-in;
+    background-color: var(--primary2);
+    color: var(--black);
 }
 
 .trending-container > div:hover{
@@ -253,13 +257,6 @@ button{
     margin-left: -1rem;
 }
 
-/* .grid-card {
-    transition: all 0.3s ease-in-out;
-}
-
-.grid-card:hover{
-    transform: scale(1.02);
-} */
 
 .grid-1{
 }
