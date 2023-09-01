@@ -47,7 +47,7 @@ body{
     margin: auto 2rem;
     display: flex;
     flex-direction: column;
-    background-color: var(--white);
+    background-color: #f8f4f0;
 }
 
 h1{
@@ -78,7 +78,7 @@ button{
 }
 
 .shadow-1 {
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 12px;
 }
 
 
@@ -164,7 +164,7 @@ button{
 }  
 
 .news-details{
-    padding: 2rem;
+    padding: 1.5rem;
     margin-bottom: 2rem;
     text-align: justify;
 }
@@ -518,7 +518,7 @@ svg{
 /* News Feature */
 
 .index-container{
-    width: 55rem;
+    width: 70rem;
 
 }
 
@@ -533,7 +533,7 @@ svg{
 /* News Page */
 
 .greetings, .header, .news-main-container{
-    width: 55rem;
+    width: 70rem;
     margin: auto;
 }
 
