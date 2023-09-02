@@ -223,6 +223,11 @@ button{
     margin-bottom: 3rem;
 }
 
+.trending{
+    display: flex;
+    flex-direction: column;
+}
+
 .trending-container > div {
     gap: 10px;
     align-items: center;
