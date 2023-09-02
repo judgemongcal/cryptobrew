@@ -277,9 +277,13 @@ const displayMarket = (market) => {
       div.innerHTML = `
       <p>${i+1}</p>
       <div class="coin-market-details">
+          <div class = "coin-market-img"> 
           <img src=${market[i].image} alt="">
+          </div>
+          <div class = "coin-market-names"> 
           <p class="coin-market-name heavy">${market[i].name}</p>
            <p class="coin-market-ticker">${market[i].symbol.toUpperCase()}</p>
+          </div>
       </div>
       <p class="current-price">$${market[i].current_price.toLocaleString()}</p>
       <p class="price-change-pct ${change24H > 0? 'positive' : 'negative'}">${market[i].price_change_percentage_24h.toFixed(2)}%</p>
