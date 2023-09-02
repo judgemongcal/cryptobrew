@@ -48,7 +48,16 @@
             </div>
             <div class="market-container">
                 <div class="coin-div">
-                    
+                    <p>1</p>
+                    <div class="coin-details">
+                        <img src="assets/images/image_pholder.webp" alt="">
+                        <p class="coin-name">Bitcoin</p>
+                         <p class="coin-ticker">BTC</p>
+                    </div>
+                    <p class="current-price">$25837</p>
+                    <p class="price-change-pct">-0.56%</p>
+                    <p class="24h-high hide-coin-detail">$26000</p>
+                    <p class="24h-low hide-coin-detail">$25400</p>
                 </div>
             </div>
         </section>
@@ -58,8 +67,39 @@
     </div>
     
 <style>
+    .market-container{
+        margin-bottom: 4rem;
+    }
 
+    .coin-div{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        border-radius: 5px;
+        background-color: burlywood;
+    }
+
+    .coin-details{
+        display: flex;
+        justify-content: space-between;
+        gap: 5px;
+    }
+
+    .coin-details img{
+        width: 25px;
+        height: auto;
+    }
+
+    .hide-coin-detail{
+        display: none;
+    }
    
+   @media(min-width: 40rem){
+    .hide-coin-detail{
+        display: flex;
+    }
+   }
 </style>
 
 </body>
