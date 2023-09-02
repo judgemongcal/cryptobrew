@@ -272,6 +272,7 @@ const displayTrending = (trending, btc) => {
 const displayMarket = (market) => { 
     for(let i = 0; i < market.length; i++){
       const div = document.createElement('div');
+      const change24H = parseInt(market[i].price_change_percentage_24h);
       div.classList.add('coin-market-div', 'shadow-1');
       div.innerHTML = `
       <p>${i+1}</p>
@@ -280,10 +281,10 @@ const displayMarket = (market) => {
           <p class="coin-market-name heavy">${market[i].name}</p>
            <p class="coin-market-ticker">${market[i].symbol.toUpperCase()}</p>
       </div>
-      <p class="current-price">$${market[i].current_price}</p>
-      <p class="price-change-pct">${market[i].price_change_percentage_24h.toFixed(2)}%</p>
+      <p class="current-price">$${market[i].current_price.toLocaleString()}</p>
+      <p class="price-change-pct ${change24H > 0? 'positive' : 'negative'}">${market[i].price_change_percentage_24h.toFixed(2)}%</p>
       <p class="24h-high hide-coin-detail">$${market[i].high_24h.toLocaleString()}</p>
-      <p class="24h-low hide-coin-detail">$${market[i].high_24h.toLocaleString()}</p>
+      <p class="24h-low hide-coin-detail">$${market[i].low_24h.toLocaleString()}</p>
   </div>
       `
       marketContainer.appendChild(div);
