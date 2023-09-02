@@ -6,7 +6,7 @@ const newsNextBtn = document.querySelector('.next');
 const newsPrevBtn = document.querySelector('.previous');
 const modalEl = document.querySelector('.news-modal');
 const trendingContainer = document.querySelector('.trending-container');
-// let modalExitBtn = document.querySelector('.exit-modal');
+const marketContainer = document.querySelector('.market-container');
 const today = new Date();
 
 const global = {
@@ -22,7 +22,10 @@ const global = {
   },
   market_currency: 'usd',
   market_order: 'desc',
-  market_page: 1
+  market_page: 1,
+  simpleswap: {
+    apiKey: 'f206d9bc-0d03-4b6d-9a26-1f0a31b718d8'
+  }
 };
 
 
@@ -237,6 +240,7 @@ const getCoins = async () => {
     console.log(marketRes);
 
     displayTrending(trendingRes, price);
+    displayMarket(marketRes);
 }
 
 // Display Trending Coins to DOM
@@ -262,10 +266,29 @@ const displayTrending = (trending, btc) => {
     `
     trendingContainer.appendChild(div);
   }
-
-
 }
 
+// Display Market View to DOM
+const displayMarket = (market) => { 
+    for(let i = 0; i < market.length; i++){
+      const div = document.createElement('div');
+      div.classList.add('coin-market-div', 'shadow-1');
+      div.innerHTML = `
+      <p>${i+1}</p>
+      <div class="coin-market-details">
+          <img src=${market[i].image} alt="">
+          <p class="coin-market-name heavy">${market[i].name}</p>
+           <p class="coin-market-ticker">${market[i].symbol.toUpperCase()}</p>
+      </div>
+      <p class="current-price">$${market[i].current_price}</p>
+      <p class="price-change-pct">${market[i].price_change_percentage_24h.toFixed(2)}%</p>
+      <p class="24h-high hide-coin-detail">$${market[i].high_24h.toLocaleString()}</p>
+      <p class="24h-low hide-coin-detail">$${market[i].high_24h.toLocaleString()}</p>
+  </div>
+      `
+      marketContainer.appendChild(div);
+    }
+}
 
   
 
