@@ -19,11 +19,11 @@ const global = {
   endDate: today.toISOString().split('T')[0],
   newsApi: {
     apiKey: 'Mt0V4THOHF3RqwmodajlbaijTAdVUS2r'
-  }
+  },
+  market_currency: 'usd',
+  market_order: 'desc',
+  market_page: 1
 };
-
-
-
 
 
 
@@ -222,16 +222,21 @@ const showModal = async (e) => {
 
 }
 
-// Trending Feature
+// Trending and Market View Feature
 
 // Get Trending Coins and BTC price from Coingecko API
-const getTrending = async () => {
-    const data = await fetch('https://api.coingecko.com/api/v3/search/trending');
-    const res = await data.json();
-    const btcPrice = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')
+const getCoins = async () => {
+    const trendingData = await fetch('https://api.coingecko.com/api/v3/search/trending');
+    const trendingRes = await trendingData.json();
+
+    const btcPrice = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
     const price = await btcPrice.json();
-    console.log(res, price);
-    displayTrending(res, price);
+
+    const marketCoins = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${global.market_currency}&order=market_cap_${global.market_order}&per_page=10&page=${global.market_page}`);
+    const marketRes = await marketCoins.json();
+    console.log(marketRes);
+
+    displayTrending(trendingRes, price);
 }
 
 // Display Trending Coins to DOM
@@ -271,7 +276,7 @@ const init = () => {
   switch(global.currentPath) {
     case '/index.html': 
       displayNews(getNews());
-      getTrending();
+      getCoins();
       break;
     case '/news.html': 
       displayNews(getNews());

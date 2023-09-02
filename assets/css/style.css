@@ -108,7 +108,7 @@ button{
 
 }
 
-.greetings{
+.greetings, .section-header{
     margin-bottom: 2.5rem;
     display: flex;
     flex-direction: row;
@@ -116,7 +116,7 @@ button{
     align-items: center;
 }
 
-.greetings h2{
+.greetings h2, .section-header h2{
     font-size: 1.5rem;
 }
 
