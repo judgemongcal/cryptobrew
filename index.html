@@ -77,10 +77,20 @@
         align-items: center;
         padding: 1rem;
         border-radius: 5px;
-        background-color: burlywood;
+        background-color: var(--primary);
+        color: var(--white);
         margin-bottom: 1rem;
         gap: 7px;
+        transition: all 0.3s ease;
 
+    }
+
+    .coin-market-div:hover, coin-market-div:active{
+        transform: scale(1.05);
+        background: rgb(238,120,108);
+        background: -moz-linear-gradient(90deg, rgba(238,120,108,1) 0%, rgba(23,15,83,1) 100%);
+        background: -webkit-linear-gradient(90deg, rgba(238,120,108,1) 0%, rgba(23,15,83,1) 100%);
+        background: linear-gradient(90deg, rgba(238,120,108,1) 0%, rgba(23,15,83,1) 100%);
     }
 
     .coin-market-details{
