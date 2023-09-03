@@ -129,7 +129,7 @@ button{
 }
 
 
-/* Swiper */
+/* ----- Swiper Section ----- */
 
 .swiper {
     width: 100%;
@@ -157,7 +157,7 @@ button{
   }
 
 
-  /* News */
+/* ----- News Section ----- */
 
 
 .news h1{
@@ -219,7 +219,7 @@ button{
     transform: scale(1.02);
 }
 
-/* Trending Feature */
+/* ----- Trending Section ----- */
 
 .trending-container{
     display: flex;
@@ -250,8 +250,6 @@ button{
     background: linear-gradient(90deg, rgba(238,120,108,1) 0%, rgba(23,15,83,1) 100%);
     transform: scale(1.02);
     color: var(--white);
-    /* -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;     */
 }
 
 .trending-container img{
@@ -268,13 +266,68 @@ button{
     color: var(--white);
 }
 
+/* ----- Market View Section ----- */
+
+.market-container{
+    margin-bottom: 4rem;
+    font-size: 0.8rem;
+}
+
+.coin-market-div{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    text-align: center;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 5px;
+    background-color: var(--primary);
+    color: var(--white);
+    margin-bottom: 1rem;
+    /* gap: 7px; */
+    transition: all 0.3s ease;
+}
+
+.coin-market-names{
+    text-align: left;
+}
+
+.coin-market-div:hover, coin-market-div:active{
+    transform: scale(1.05);
+    background: rgb(238,120,108);
+    background: -moz-linear-gradient(90deg, rgba(238,120,108,1) 0%, rgba(23,15,83,1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(238,120,108,1) 0%, rgba(23,15,83,1) 100%);
+    background: linear-gradient(90deg, rgba(238,120,108,1) 0%, rgba(23,15,83,1) 100%);
+}
+
+.coin-market-details{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    /* font-size: 0.65rem; */
+}
+
+.coin-market-details img{
+    width: 25px;
+    height: auto;
+}
+
+.hide-coin-detail{
+    display: none;
+}
+
+.positive{
+    color: green;
+}
+
+.negative{
+    color: red;
+}
 
 
 
-
-
-
-/* News Page */
+/* ----------------------------------- News Page -----------------------------------  */ 
 
 .news-card {
     background-color: var(--white);
@@ -296,10 +349,6 @@ button{
 /* Filter */
 
 .filter{
-    /* display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 10px; */
     margin: 1rem auto 1.25rem auto;
     display: grid;
     grid-template-columns: 1fr 1fr 0.5fr 0.5fr;
@@ -391,17 +440,19 @@ button{
 }
 
 
-/* Media Queries */
+/* ----------------------------------- Media Queries -----------------------------------  */
 
 
-/* Tablet View */
+/* ---------- Tablet View ---------- */
 
 @media(min-width: 40rem){
 
-/* News Feature */
-.index-container, .market-container{
+/* ----- Index Page ----- */
+
+/* News Section */
+.index-container{
     width: 37.5rem;
-    margin: auto;
+    margin: auto auto;
 }
 
 .header h1{
@@ -416,9 +467,10 @@ button{
     font-size: 1.75rem;
 }
 
-/* Trending */
+/* Trending Section */
 
 .trending-container{
+    width: 37.5rem;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 0.5fr 0.5fr;
@@ -429,10 +481,26 @@ button{
     justify-content: center;
 }
 
+/* Market View Section */
+
+.market-container{
+    width: 37.5rem;
+    margin: auto;
+}
+
+.coin-market-div{
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.hide-coin-detail{
+    display: block;
+}
 
 
 
-/* News Page */
+
+
+/* ----- News Page ----- */
 
 .main-btn{
     padding: 20px 20px 15px 20px;
@@ -508,7 +576,7 @@ svg{
 
 
 
-/* Desktop View */
+/* ---------- Desktop View ---------- */
 
 @media(min-width: 60rem){
 

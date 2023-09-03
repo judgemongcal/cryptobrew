@@ -287,8 +287,8 @@ const displayMarket = (market) => {
       </div>
       <p class="current-price">$${market[i].current_price.toLocaleString()}</p>
       <p class="price-change-pct ${change24H > 0? 'positive' : 'negative'}">${market[i].price_change_percentage_24h.toFixed(2)}%</p>
-      <p class="24h-high hide-coin-detail">$${market[i].high_24h.toLocaleString()}</p>
-      <p class="24h-low hide-coin-detail">$${market[i].low_24h.toLocaleString()}</p>
+      <p class="24h-high hide-coin-detail positive">$${market[i].high_24h.toLocaleString()}</p>
+      <p class="24h-low hide-coin-detail negative">$${market[i].low_24h.toLocaleString()}</p>
   </div>
       `
       marketContainer.appendChild(div);
