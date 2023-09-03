@@ -7,6 +7,7 @@
     --tertiary: rgba(231, 138, 0, 1);
     --black: rgba(11, 10, 10, 1);
     --white: rgba(239, 253, 255, 1);
+    --white2: rgba(245, 245, 249, 1);
     --shadow: rgba(0, 0, 0, 10%);
     --red: rgba(191,29,41,1);
     --dark-red: rgb(114, 18, 25);
@@ -47,7 +48,7 @@ body{
     margin: auto 2rem;
     display: flex;
     flex-direction: column;
-    background-color: var(--white);
+    background-color: var(--white2);
 }
 
 h1{
@@ -398,7 +399,7 @@ button{
 @media(min-width: 40rem){
 
 /* News Feature */
-.index-container{
+.index-container, .market-container{
     width: 37.5rem;
     margin: auto;
 }
@@ -426,18 +427,6 @@ button{
 .grid-1{
     grid-column: span 2;
     justify-content: center;
-}
-.grid-2{
-}
-.grid-3{
-}
-.grid-4{
-}
-.grid-5{
-}
-.grid-6{
-}
-.grid-7{
 }
 
 
