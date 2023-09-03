@@ -483,7 +483,7 @@ button{
 
 /* Market View Section */
 
-.market-container{
+.market{
     width: 37.5rem;
     margin: auto;
 }
@@ -582,8 +582,8 @@ svg{
 
 /* News Feature */
 
-.index-container{
-    width: 70rem;
+.index-container, .trending-container, .market{
+    width: 50rem;
 
 }
 
@@ -598,7 +598,7 @@ svg{
 /* News Page */
 
 .greetings, .header, .news-main-container{
-    width: 70rem;
+    width: 50rem;
     margin: auto;
 }
 
@@ -644,3 +644,11 @@ svg{
 
 }
 
+@media(min-width: 75rem){
+
+    /* News Feature */
+    
+    .index-container, .trending-container, .market{
+        width: 60rem;
+    }
+}
