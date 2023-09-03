@@ -211,18 +211,12 @@ const exitModal = () => {
 
 
 const showModal = async (e) => {
-  console.log(e.target);
   e.target.id.includes('nyt')? global.news_id = e.target.id :
   global.news_id = e.target.parentElement.id;
-
-  console.log(global.news_id);
   modalEl.innerHTML = '';
   const res = await getNews();
   displayNews(res);
   modalEl.style.display = 'flex';
-  console.log(modalEl.style.display);
-
-
 }
 
 // Trending and Market View Feature
@@ -237,7 +231,6 @@ const getCoins = async () => {
 
     const marketCoins = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${global.market_currency}&order=market_cap_${global.market_order}&per_page=10&page=${global.market_page}`);
     const marketRes = await marketCoins.json();
-    console.log(marketRes);
 
     displayTrending(trendingRes, price);
     displayMarket(marketRes);
@@ -249,7 +242,6 @@ const displayTrending = (trending, btc) => {
   
   for(let i = 0; i < trending.coins.length; i++){
     const div = document.createElement('div');
-    console.log(trending.coins[i].item.name);
     div.classList.add(`grid-card`,`grid-${i+1}`, `shadow-1`);
     div.innerHTML = `
     <h1 class="rank">#${i + 1}</h1>
@@ -300,7 +292,6 @@ const displayMarket = (market) => {
 
 // Router
 const init = () => {
-  console.log(global.currentPath);
   switch(global.currentPath) {
     case '/index.html': 
       displayNews(getNews());
@@ -315,7 +306,6 @@ const init = () => {
       newsPageContainer.addEventListener('click', showModal);
       checkButtons();
       document.addEventListener('click', (e) => {
-        console.log(e.target);
         if(e.target.classList.contains('exit')) exitModal();
       })
       break;
