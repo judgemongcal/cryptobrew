@@ -192,7 +192,7 @@ button{
 }
 
 
-.gradient-btn{
+.primary-btn{
     width: 100%;
     font-size: 0.95rem;
     color: var(--white);
@@ -201,17 +201,16 @@ button{
     border: none;
     border-radius: 5px;
     background: rgb(54,45,121);
-    background: -moz-linear-gradient(90deg, rgba(54,45,121,1) 0%, rgba(23,15,83,1) 100%);
-    background: -webkit-linear-gradient(90deg, rgba(54,45,121,1) 0%, rgba(23,15,83,1) 100%);
-    background: linear-gradient(90deg, rgba(54,45,121,1) 0%, rgba(23,15,83,1) 100%);
+    background-color: var(--black);
     transition:  all 0.3s ease-in-out;
 }
 
 .news-btn{
     padding: 1rem 2rem;
+
 }
 
-.gradient-btn:hover{
+.primary-btn:hover, .primary-btn:active{
     background: rgb(238,120,108);
     background: -moz-linear-gradient(90deg, rgba(238,120,108,1) 0%, rgba(23,15,83,1) 100%);
     background: -webkit-linear-gradient(90deg, rgba(238,120,108,1) 0%, rgba(23,15,83,1) 100%);
@@ -273,6 +272,19 @@ button{
     font-size: 0.8rem;
 }
 
+.column-header{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    text-align: center;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 5px;
+    background-color: var(--black);
+    color: var(--white);
+    margin-bottom: 1rem;
+}
+
 .coin-market-div{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -330,7 +342,7 @@ button{
 /* ----------------------------------- News Page -----------------------------------  */ 
 
 .news-card {
-    background-color: var(--white);
+    background-color: var(--white2);
     border-radius: 5px;
     margin-top: 1rem;
     transition: all 0.3s ease-in;
@@ -488,7 +500,7 @@ button{
     margin: auto;
 }
 
-.coin-market-div{
+.coin-market-div, .column-header{
     grid-template-columns: repeat(6, 1fr);
 }
 
@@ -593,6 +605,7 @@ svg{
 
 .greetings h2{
     font-size: 2.5rem;
+    
 }
 
 /* News Page */
@@ -648,7 +661,7 @@ svg{
 
     /* News Feature */
     
-    .index-container, .trending-container, .market{
+    .index-container, .trending-container, .market, .greetings{
         width: 60rem;
     }
 }

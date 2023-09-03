@@ -109,7 +109,7 @@ const displayNews = async (result) => {
                 <p id="news-date" class="heavy">${finalDate}</p>
                 <p id="news-source" class="heavy">${source[i].source}</p>
                 <p id="news-summary">${source[i].snippet}</p>
-                <button class="view-source-btn heavy shadow-1 gradient-btn">
+                <button class="view-source-btn heavy shadow-1 primary-btn">
                     <a href="${source[i].web_url}" target="_blank">VIEW SOURCE</a>
                 </button>
             </div>
