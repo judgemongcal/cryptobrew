@@ -276,12 +276,13 @@ const displayTrending = (trending, btc) => {
 
 // Display Market View to DOM
 const displayMarket = (market) => { 
+    console.log(market);
     for(let i = 0; i < market.length; i++){
       const div = document.createElement('div');
       const change24H = parseInt(market[i].price_change_percentage_24h);
       div.classList.add('coin-market-div', 'shadow-1');
       div.innerHTML = `
-      <p>${i+1}</p>
+      <p class="market-rank">${i+1}</p>
       <div class="coin-market-details">
           <div class = "coin-market-img"> 
           <img src=${market[i].image} alt="">
@@ -295,6 +296,8 @@ const displayMarket = (market) => {
       <p class="price-change-pct ${change24H > 0? 'positive' : 'negative'}">${market[i].price_change_percentage_24h.toFixed(2)}%</p>
       <p class="24h-high hide-coin-detail positive">$${market[i].high_24h.toLocaleString()}</p>
       <p class="24h-low hide-coin-detail negative">$${market[i].low_24h.toLocaleString()}</p>
+      <p class="market-cap hide-coin-detail-xl">$${market[i].market_cap.toLocaleString()}</p>
+  
   </div>
       `
       marketContainer.appendChild(div);
