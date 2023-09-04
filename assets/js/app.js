@@ -223,17 +223,31 @@ const showModal = async (e) => {
 
 // Get Trending Coins and BTC price from Coingecko API
 const getCoins = async () => {
-    const trendingData = await fetch('https://api.coingecko.com/api/v3/search/trending');
-    const trendingRes = await trendingData.json();
+  let marketCoins = '', marketRes ='';
+    switch(global.currentPath){
+      case '/index.html':
+        const trendingData = await fetch('https://api.coingecko.com/api/v3/search/trending');
+        const trendingRes = await trendingData.json();
+    
+        const btcPrice = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+        const price = await btcPrice.json();
+    
+        marketCoins = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${global.market_currency}&order=market_cap_${global.market_order}&per_page=10&page=${global.market_page}`);
+        marketRes = await marketCoins.json();
 
-    const btcPrice = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
-    const price = await btcPrice.json();
+        displayTrending(trendingRes, price);
+        displayMarket(marketRes);
+        break;
 
-    const marketCoins = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${global.market_currency}&order=market_cap_${global.market_order}&per_page=10&page=${global.market_page}`);
-    const marketRes = await marketCoins.json();
+      case '/market.html':
+        marketCoins = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${global.market_currency}&order=market_cap_${global.market_order}&per_page=10&page=${global.market_page}`);
+        marketRes = await marketCoins.json();
 
-    displayTrending(trendingRes, price);
-    displayMarket(marketRes);
+        displayMarket(marketRes);
+        break;
+    }
+ 
+
 }
 
 // Display Trending Coins to DOM
@@ -309,9 +323,11 @@ const init = () => {
         if(e.target.classList.contains('exit')) exitModal();
       })
       break;
+      case '/market.html':
+      getCoins();
+      break;
   }
 }
-
 
 
 
