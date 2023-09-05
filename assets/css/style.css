@@ -356,6 +356,40 @@ button{
     margin-bottom: 5rem;
 }
 
+/* ----------------------------------- Market View Page -----------------------------------  */ 
+
+/* Search Section */
+
+.search{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.search-area input{
+    padding: 0.5rem 2.25rem;
+    border: none;
+    border-radius: 5px;
+}
+
+.search-btn{
+    padding: 0.5rem 1rem;
+    background-color: var(--white2);
+    border-radius: 5px;
+}
+
+.search-btn:hover, .search-btn:active {
+    background-color: var(--black);
+    color: var(--white2);
+}
+
+.search-label{
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+
+
+
+
 
 /* ----------------------------------- News Page -----------------------------------  */ 
 
