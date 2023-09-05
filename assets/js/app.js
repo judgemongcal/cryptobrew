@@ -268,11 +268,11 @@ const resetMarket = () => {
 }
 
 const rotateSortBtn = () => {
-  if(sortIcon.style.transfrom === 'rotate(180deg'){
-    sortIcon.style.transform = 'rotate(-180deg)';
+  if(sortIcon.style.transform === 'rotate(180deg)') {
+    sortIcon.style.transform = 'rotate(360deg)';
+  } else{
+    sortIcon.style.transform = 'rotate(180deg)';
   }
-  sortIcon.style.transform = 'rotate(180deg)';
-  console.log(sortIcon.style.transform);
 }
 
 
