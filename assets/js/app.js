@@ -7,6 +7,9 @@ const newsPrevBtn = document.querySelector('.previous');
 const modalEl = document.querySelector('.news-modal');
 const trendingContainer = document.querySelector('.trending-container');
 const marketContainer = document.querySelector('.market-container');
+const marketResultContainer = document.querySelector('.market-result');
+const sortArrow = document.querySelector('.market-rank');
+const sortIcon = document.querySelector('#arrow-sort');
 const today = new Date();
 
 const global = {
@@ -23,9 +26,7 @@ const global = {
   market_currency: 'usd',
   market_order: 'desc',
   market_page: 1,
-  simpleswap: {
-    apiKey: 'f206d9bc-0d03-4b6d-9a26-1f0a31b718d8'
-  }
+  market_sort: 'desc'
 };
 
 
@@ -247,8 +248,34 @@ const getCoins = async () => {
         break;
     }
  
-
 }
+
+// Get Filtered Results (Market Cap)
+
+const sortMarket = () => {
+  global.market_order === 'desc'? global.market_order = 'asc' : global.market_order = 'desc';
+  global.market_page = 1;
+  resetMarket();
+  rotateSortBtn();
+  getCoins();
+
+  
+  
+}
+
+const resetMarket = () => {
+  marketResultContainer.innerHTML = '';
+}
+
+const rotateSortBtn = () => {
+  if(sortIcon.style.transfrom === 'rotate(180deg'){
+    sortIcon.style.transform = 'rotate(-180deg)';
+  }
+  sortIcon.style.transform = 'rotate(180deg)';
+  console.log(sortIcon.style.transform);
+}
+
+
 
 // Display Trending Coins to DOM
 const displayTrending = (trending, btc) => {
@@ -276,7 +303,6 @@ const displayTrending = (trending, btc) => {
 
 // Display Market View to DOM
 const displayMarket = (market) => { 
-    console.log(market);
     for(let i = 0; i < market.length; i++){
       const div = document.createElement('div');
       const change24H = parseInt(market[i].price_change_percentage_24h);
@@ -293,14 +319,14 @@ const displayMarket = (market) => {
           </div>
       </div>
       <p class="current-price">$${market[i].current_price.toLocaleString()}</p>
-      <p class="price-change-pct ${change24H > 0? 'positive' : 'negative'}">${market[i].price_change_percentage_24h.toFixed(2)}%</p>
-      <p class="24h-high hide-coin-detail positive">$${market[i].high_24h.toLocaleString()}</p>
-      <p class="24h-low hide-coin-detail negative">$${market[i].low_24h.toLocaleString()}</p>
-      <p class="market-cap hide-coin-detail-xl">$${market[i].market_cap.toLocaleString()}</p>
+      <p class="price-change-pct ${change24H > 0? 'positive' : 'negative'}">${market[i].price_change_percentage_24h? market[i].price_change_percentage_24h.toFixed(2)+ '%': 'N/A' }</p>
+      <p class="24h-high hide-coin-detail positive">${market[i].high_24h? '$' + market[i].high_24h.toLocaleString() : 'N/A'}</p>
+      <p class="24h-low hide-coin-detail negative">${market[i].low_24h? '$' + market[i].high_24h.toLocaleString() : 'N/A'}</p>
+      <p class="market-cap hide-coin-detail-xl">${market[i].market_cap? '$' + market[i].market_cap.toLocaleString() : '0'}</p>
   
   </div>
       `
-      marketContainer.appendChild(div);
+      marketResultContainer.appendChild(div);
     }
 }
 
@@ -328,6 +354,8 @@ const init = () => {
       break;
       case '/market.html':
       getCoins();
+      sortArrow.addEventListener('click', sortMarket);
+
       break;
   }
 }
