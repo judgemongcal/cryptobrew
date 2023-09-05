@@ -308,7 +308,7 @@ const displayMarket = (market) => {
       const change24H = parseInt(market[i].price_change_percentage_24h);
       div.classList.add('coin-market-div', 'shadow-1');
       div.innerHTML = `
-      <p class="market-rank">${i+1}</p>
+      <p class="market-rank">${market[i].market_cap_rank != null? market[i].market_cap_rank : 'N/A' }</p>
       <div class="coin-market-details">
           <div class = "coin-market-img"> 
           <img src=${market[i].image} alt="">
