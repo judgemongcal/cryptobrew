@@ -389,13 +389,13 @@ const searchMarket = (e) => {
   coins.forEach(coin => {
     const id = coin.id;
     console.log(coin.id);
-    if(id.indexOf(query) !== -1){
-      coin.style.display = 'auto';
+  if(id.indexOf(query) !== -1){
+      coin.style.display = 'grid';
     } else{
       coin.style.display = 'none';
     }
   })
-}
+};
 
 
   
