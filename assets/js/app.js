@@ -288,6 +288,7 @@ const sortMarket = () => {
   resetMarket();
   rotateSortBtn();
   getCoins();
+  checkButtons();
 
   
   
