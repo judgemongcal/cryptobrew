@@ -10,6 +10,7 @@ const marketContainer = document.querySelector('.market-container');
 const marketResultContainer = document.querySelector('.market-result');
 const sortArrow = document.querySelector('.market-rank');
 const sortIcon = document.querySelector('#arrow-sort');
+const search = document.querySelector('#search-query');
 const today = new Date();
 
 const global = {
@@ -273,56 +274,12 @@ const getCoins = async () => {
         } else{
           global.market_isLastPage = false;
         }
+        console.log(marketRes);
         displayMarket(marketRes);
         break;
     }
  
 }
-
-// Get Filtered Results (Market Cap)
-
-const sortMarket = () => {
-  global.market_order === 'desc'? global.market_order = 'asc' : global.market_order = 'desc';
-  global.market_page = 1;
-  global.market_isLastPage = false;
-  resetMarket();
-  rotateSortBtn();
-  getCoins();
-  checkButtons();
-
-  
-  
-}
-
-const resetMarket = () => {
-  marketResultContainer.innerHTML = '';
-}
-
-const rotateSortBtn = () => {
-  if(sortIcon.style.transform === 'rotate(180deg)') {
-    sortIcon.style.transform = 'rotate(360deg)';
-  } else{
-    sortIcon.style.transform = 'rotate(180deg)';
-  }
-}
-
-// Get Next Page of Market View
-
-const showNextMarketPage = () => {
-  global.market_page++;
-  getCoins();
-  resetMarket();
-  checkButtons();
-}
-
-const showPrevMarketPage = () => {
-  global.market_page--;
-  getCoins();
-  resetMarket();
-  checkButtons();
-}
-
-
 
 // Display Trending Coins to DOM
 const displayTrending = (trending, btc) => {
@@ -354,6 +311,7 @@ const displayMarket = (market) => {
       const div = document.createElement('div');
       const change24H = parseInt(market[i].price_change_percentage_24h);
       div.classList.add('coin-market-div', 'shadow-1');
+      div.setAttribute("id", `${market[i].id}`);
       div.innerHTML = `
       <p class="market-rank">${market[i].market_cap_rank != null? market[i].market_cap_rank : 'N/A' }</p>
       <div class="coin-market-details">
@@ -376,6 +334,69 @@ const displayMarket = (market) => {
       marketResultContainer.appendChild(div);
     }
 }
+
+
+// Get Filtered Results (Market Cap)
+
+const sortMarket = () => {
+  global.market_order === 'desc'? global.market_order = 'asc' : global.market_order = 'desc';
+  global.market_page = 1;
+  global.market_isLastPage = false;
+  resetMarket();
+  rotateSortBtn();
+  getCoins();
+  checkButtons();
+
+  
+  
+}
+
+// Reset Market View
+const resetMarket = () => {
+  marketResultContainer.innerHTML = '';
+}
+
+// Rotate Sort Button
+const rotateSortBtn = () => {
+  if(sortIcon.style.transform === 'rotate(180deg)') {
+    sortIcon.style.transform = 'rotate(360deg)';
+  } else{
+    sortIcon.style.transform = 'rotate(180deg)';
+  }
+}
+
+// Get Next Page of Market View
+const showNextMarketPage = () => {
+  global.market_page++;
+  getCoins();
+  resetMarket();
+  checkButtons();
+}
+
+// Get Prev Page of Market View
+const showPrevMarketPage = () => {
+  global.market_page--;
+  getCoins();
+  resetMarket();
+  checkButtons();
+}
+
+// Search Market
+const searchMarket = (e) => {
+  const coins = document.querySelectorAll('.coin-market-div');
+  const query = e.toLowerCase();
+  console.log(e,coins);
+  coins.forEach(coin => {
+    const id = coin.id;
+    console.log(coin.id);
+    if(id.indexOf(query) !== -1){
+      coin.style.display = 'auto';
+    } else{
+      coin.style.display = 'none';
+    }
+  })
+}
+
 
   
 
@@ -404,8 +425,11 @@ const init = () => {
       sortArrow.addEventListener('click', sortMarket);
       nextBtn.addEventListener('click', showNextMarketPage);
       prevBtn.addEventListener('click', showPrevMarketPage);
+      search.addEventListener('keyup', function(e){
+        searchMarket(e.target.value);
+      });
       checkButtons();
-      console.log(global.market_page);
+
       break;
   }
 }
