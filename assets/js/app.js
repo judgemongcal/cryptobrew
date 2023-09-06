@@ -3,7 +3,7 @@ const newsPageContainer = document.querySelector('.news-container');
 const newsNewestBtn = document.querySelector('.newest');
 const newsOldestBtn = document.querySelector('.oldest');
 const nextBtn = document.querySelector('.next');
-const PrevBtn = document.querySelector('.previous');
+const prevBtn = document.querySelector('.previous');
 const modalEl = document.querySelector('.news-modal');
 const trendingContainer = document.querySelector('.trending-container');
 const marketContainer = document.querySelector('.market-container');
@@ -283,6 +283,12 @@ const showNextMarketPage = () => {
   resetMarket();
 }
 
+const showPrevMarketPage = () => {
+  global.market_page--;
+  getCoins();
+  resetMarket();
+}
+
 
 
 // Display Trending Coins to DOM
@@ -364,6 +370,7 @@ const init = () => {
       getCoins();
       sortArrow.addEventListener('click', sortMarket);
       nextBtn.addEventListener('click', showNextMarketPage);
+      prevBtn.addEventListener('click', showPrevMarketPage);
 
 
       break;
