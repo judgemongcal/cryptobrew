@@ -316,7 +316,7 @@ button{
     align-items: center;
     gap: 10px;
     /* font-size: 0.65rem; */
-    margin-left: -3.5rem;
+    margin-left: -2rem;
 }
 
 .coin-market-details img{
@@ -345,7 +345,7 @@ button{
 }
 
 .column-header .coin-market-name{
-    margin-left: -3rem;
+    margin-left: -2rem;
 }
 
 .market-btn-top{
