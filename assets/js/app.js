@@ -26,7 +26,8 @@ const global = {
   market_currency: 'usd',
   market_order: 'desc',
   market_page: 1,
-  market_sort: 'desc'
+  market_sort: 'desc',
+  market_isLastPage: 'false'
 };
 
 
@@ -184,16 +185,16 @@ const showPrevNews = async () => {
 
 const checkButtons = () => {
   // Prev Button
-  if(global.currentPage <= 0){
+  if(global.currentPage <= 0 || global.market_page <= 0){
     prevBtn.disabled = true;
     prevBtn.style.pointerEvents = 'none';
-    } else if (global.currentPage > 0) {
+    } else if (global.currentPage > 0 || global.market_page > 0) {
       prevBtn.disabled = false;
       prevBtn.style.pointerEvents = 'auto';
     }
   
   // Next Button
-    if(global.isLastPage){
+    if(global.isLastPage || global.market_isLastPage){
       nextBtn.disabled = true;
       nextBtn.style.pointerEvents = 'none';
     } else{
@@ -243,6 +244,11 @@ const getCoins = async () => {
       case '/market.html':
         marketCoins = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${global.market_currency}&order=market_cap_${global.market_order}&per_page=10&page=${global.market_page}`);
         marketRes = await marketCoins.json();
+        if(marketRes.length < 10){
+          global.market_isLastPage = true;
+        } else{
+          global.market_isLastPage = false;
+        }
 
         displayMarket(marketRes);
         break;
@@ -281,12 +287,14 @@ const showNextMarketPage = () => {
   global.market_page++;
   getCoins();
   resetMarket();
+  checkButtons();
 }
 
 const showPrevMarketPage = () => {
   global.market_page--;
   getCoins();
   resetMarket();
+  checkButtons();
 }
 
 
