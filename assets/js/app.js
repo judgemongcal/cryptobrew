@@ -2,8 +2,8 @@ const indexNewsSlide = document.querySelector('.swiper-wrapper');
 const newsPageContainer = document.querySelector('.news-container');
 const newsNewestBtn = document.querySelector('.newest');
 const newsOldestBtn = document.querySelector('.oldest');
-const newsNextBtn = document.querySelector('.next');
-const newsPrevBtn = document.querySelector('.previous');
+const nextBtn = document.querySelector('.next');
+const PrevBtn = document.querySelector('.previous');
 const modalEl = document.querySelector('.news-modal');
 const trendingContainer = document.querySelector('.trending-container');
 const marketContainer = document.querySelector('.market-container');
@@ -185,20 +185,20 @@ const showPrevNews = async () => {
 const checkButtons = () => {
   // Prev Button
   if(global.currentPage <= 0){
-    newsPrevBtn.disabled = true;
-    newsPrevBtn.style.pointerEvents = 'none';
+    prevBtn.disabled = true;
+    prevBtn.style.pointerEvents = 'none';
     } else if (global.currentPage > 0) {
-      newsPrevBtn.disabled = false;
-      newsPrevBtn.style.pointerEvents = 'auto';
+      prevBtn.disabled = false;
+      prevBtn.style.pointerEvents = 'auto';
     }
   
   // Next Button
     if(global.isLastPage){
-      newsNextBtn.disabled = true;
-      newsNextBtn.style.pointerEvents = 'none';
+      nextBtn.disabled = true;
+      nextBtn.style.pointerEvents = 'none';
     } else{
-      newsNextBtn.disabled = false;
-      newsNextBtn.style.pointerEvents = 'auto';
+      nextBtn.disabled = false;
+      nextBtn.style.pointerEvents = 'auto';
     }
   
 
@@ -275,6 +275,14 @@ const rotateSortBtn = () => {
   }
 }
 
+// Get Next Page of Market View
+
+const showNextMarketPage = () => {
+  global.market_page++;
+  getCoins();
+  resetMarket();
+}
+
 
 
 // Display Trending Coins to DOM
@@ -344,8 +352,8 @@ const init = () => {
       displayNews(getNews());
       newsNewestBtn.addEventListener('click', newestFirst);
       newsOldestBtn.addEventListener('click', oldestFirst);
-      newsNextBtn.addEventListener('click', showNextNews);
-      newsPrevBtn.addEventListener('click', showPrevNews);
+      nextBtn.addEventListener('click', showNextNews);
+      prevBtn.addEventListener('click', showPrevNews);
       newsPageContainer.addEventListener('click', showModal);
       checkButtons();
       document.addEventListener('click', (e) => {
@@ -355,6 +363,8 @@ const init = () => {
       case '/market.html':
       getCoins();
       sortArrow.addEventListener('click', sortMarket);
+      nextBtn.addEventListener('click', showNextMarketPage);
+
 
       break;
   }
