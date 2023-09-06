@@ -273,7 +273,6 @@ const getCoins = async () => {
         } else{
           global.market_isLastPage = false;
         }
-
         displayMarket(marketRes);
         break;
     }
@@ -366,7 +365,7 @@ const displayMarket = (market) => {
            <p class="coin-market-ticker">${market[i].symbol.toUpperCase()}</p>
           </div>
       </div>
-      <p class="current-price">$${market[i].current_price.toLocaleString()}</p>
+      <p class="current-price">${market[i].current_price? '$' + market[i].current_price.toLocaleString() : 'N/A'}</p>
       <p class="price-change-pct ${change24H > 0? 'positive' : 'negative'}">${market[i].price_change_percentage_24h? market[i].price_change_percentage_24h.toFixed(2)+ '%': 'N/A' }</p>
       <p class="24h-high hide-coin-detail positive">${market[i].high_24h? '$' + market[i].high_24h.toLocaleString() : 'N/A'}</p>
       <p class="24h-low hide-coin-detail negative">${market[i].low_24h? '$' + market[i].high_24h.toLocaleString() : 'N/A'}</p>
