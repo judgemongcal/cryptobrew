@@ -166,10 +166,10 @@ const oldestFirst = async () => {
 const showNextNews = async () => {
   global.currentPage++;
   const res = await getNews();
-  checkButtons();
   if(res.response.docs.length === 0) return;
   resetNews();
   displayNews(res);
+  checkButtons();
   
 }
 
@@ -177,30 +177,54 @@ const showPrevNews = async () => {
   global.currentPage--;
   if(global.currentPage < 0) return;
   const res = await getNews();
-  checkButtons();
   resetNews();
   displayNews(res);
-  
+  checkButtons();
 }
 
 const checkButtons = () => {
-  // Prev Button
-  if(global.currentPage <= 0 || global.market_page <= 0){
+  switch(global.currentPath){
+    case '/news.html':
+      // Prev Button
+    if(global.currentPage <= 0){
     prevBtn.disabled = true;
     prevBtn.style.pointerEvents = 'none';
-    } else if (global.currentPage > 0 || global.market_page > 0) {
+    } else if (global.currentPage > 0) {
       prevBtn.disabled = false;
       prevBtn.style.pointerEvents = 'auto';
     }
   
-  // Next Button
-    if(global.isLastPage || global.market_isLastPage){
+    // Next Button
+    if(global.isLastPage ){
       nextBtn.disabled = true;
       nextBtn.style.pointerEvents = 'none';
     } else{
       nextBtn.disabled = false;
       nextBtn.style.pointerEvents = 'auto';
+    };
+    break;
+
+    case '/market.html':
+     // Prev Button
+    if(global.market_page <= 1){
+    prevBtn.disabled = true;
+    prevBtn.style.pointerEvents = 'none';
+    } else if (global.market_page > 1) {
+      prevBtn.disabled = false;
+      prevBtn.style.pointerEvents = 'auto';
     }
+  
+     // Next Button
+    if(global.market_isLastPage){
+      nextBtn.disabled = false;
+      nextBtn.style.pointerEvents = 'auto';
+    } else{
+      nextBtn.disabled = true;
+      nextBtn.style.pointerEvents = 'none';
+    };
+    break;
+  }
+  
   
 
 };
@@ -379,8 +403,8 @@ const init = () => {
       sortArrow.addEventListener('click', sortMarket);
       nextBtn.addEventListener('click', showNextMarketPage);
       prevBtn.addEventListener('click', showPrevMarketPage);
-
-
+      checkButtons();
+      console.log(global.market_page);
       break;
   }
 }
