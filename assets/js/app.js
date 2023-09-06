@@ -215,12 +215,12 @@ const checkButtons = () => {
     }
   
      // Next Button
-    if(global.market_isLastPage){
-      nextBtn.disabled = false;
-      nextBtn.style.pointerEvents = 'auto';
-    } else{
+    if(global.market_isLastPage === true){
       nextBtn.disabled = true;
       nextBtn.style.pointerEvents = 'none';
+    } else{
+      nextBtn.disabled = false;
+      nextBtn.style.pointerEvents = 'auto';
     };
     break;
   }
@@ -285,6 +285,7 @@ const getCoins = async () => {
 const sortMarket = () => {
   global.market_order === 'desc'? global.market_order = 'asc' : global.market_order = 'desc';
   global.market_page = 1;
+  global.market_isLastPage = false;
   resetMarket();
   rotateSortBtn();
   getCoins();
