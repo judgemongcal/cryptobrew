@@ -11,7 +11,7 @@ const marketResultContainer = document.querySelector('.market-result');
 const sortArrow = document.querySelector('.market-rank');
 const sortIcon = document.querySelector('#arrow-sort');
 const search = document.querySelector('#search-query');
-let marketArchive = [];
+// let global.market_archive = [];
 const today = new Date();
 
 const global = {
@@ -30,8 +30,10 @@ const global = {
   market_page: 1,
   market_sort: 'desc',
   market_isLastPage: 'false',
+  market_isFirstPage: 'true',
   market_lastIndex: 0,
-  market_btn_action: 'next'
+  market_btn_action: 'start',
+  market_archive: []
 };
 
 
@@ -190,16 +192,16 @@ const checkButtons = () => {
   switch(global.currentPath){
     case '/news.html':
       // Prev Button
-    if(global.currentPage <= 0){
+    if(global.market_page <= 1){
     prevBtn.disabled = true;
     prevBtn.style.pointerEvents = 'none';
-    } else if (global.currentPage > 0) {
+    } else {
       prevBtn.disabled = false;
       prevBtn.style.pointerEvents = 'auto';
     }
   
     // Next Button
-    if(global.isLastPage ){
+    if(global.market_isLastPage){
       nextBtn.disabled = true;
       nextBtn.style.pointerEvents = 'none';
     } else{
@@ -210,10 +212,10 @@ const checkButtons = () => {
 
     case '/market.html':
      // Prev Button
-    if(global.market_page <= 1){
+    if(global.market_isFirstPage){
     prevBtn.disabled = true;
     prevBtn.style.pointerEvents = 'none';
-    } else if (global.market_page > 1) {
+    } else {
       prevBtn.disabled = false;
       prevBtn.style.pointerEvents = 'auto';
     }
@@ -271,21 +273,21 @@ const getCoins = async () => {
 
       case '/market.html':
         // marketCoins = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${global.market_currency}&order=market_cap_${global.market_order}&per_page=10&page=${global.market_page}`);
-        if(marketArchive.length === 0){
+        if(global.market_archive.length === 0){
           marketCoins = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${global.market_currency}&order=market_cap_${global.market_order}&per_page=500`);
           marketRes = await marketCoins.json();
-          marketArchive = marketRes;
+          global.market_archive = marketRes;
           displayMarket(marketRes);
         }
         else{
-          displayMarket(marketArchive);
+          displayMarket(global.market_archive);
         }
         // if(marketRes.length < 10){
         //   global.market_isLastPage = true;
         // } else{
         //   global.market_isLastPage = false;
         // }
-        console.log(marketRes, marketArchive);
+        console.log(marketRes, global.market_archive);
     }
  
 }
@@ -321,12 +323,23 @@ const displayMarket = (market) => {
   if(global.currentPath === '/market.html'){
     console.log(global.market_btn_action);
     switch(global.market_btn_action){
+      // case 'start': 
+      //   marketLength = 10;
+      //   global.market_lastIndex = 0;
+      //   console.log('here sort');
+      //   break;
       case 'next':
         marketLength = global.market_lastIndex + 10;
+        console.log('here next');
         break;
       case 'prev':
         marketLength = global.market_lastIndex - 10;
         global.market_lastIndex -= 20;
+        console.log('here prev');
+        break;
+      default: 
+        marketLength = 10;
+        global.market_lastIndex = 0;
         break;
     }
    
@@ -334,7 +347,7 @@ const displayMarket = (market) => {
 
     for(let i = global.market_lastIndex; i < marketLength; i++){
       const div = document.createElement('div');
-      const change24H = parseInt(market[i].price_change_percentage_24h);
+      const change24H = market[i].price_change_percentage_24h? parseInt(market[i].price_change_percentage_24h) : 'N/A';
       div.classList.add('coin-market-div', 'shadow-1');
       div.setAttribute("id", `${market[i].id}`);
       div.innerHTML = `
@@ -359,6 +372,11 @@ const displayMarket = (market) => {
       marketResultContainer.appendChild(div);
       global.market_lastIndex++;
     };
+    if(marketLength == global.market_archive.length){
+      global.market_isLastPage = true;
+    } else if(marketLength <= 10){
+      global.market_isFirstPage = true;
+    }
     console.log(global.market_lastIndex, marketLength);
 }
 
@@ -366,9 +384,14 @@ const displayMarket = (market) => {
 // Get Filtered Results (Market Cap)
 
 const sortMarket = () => {
+  global.market_btn_action = 'start';
   global.market_order === 'desc'? global.market_order = 'asc' : global.market_order = 'desc';
   global.market_page = 1;
   global.market_isLastPage = false;
+  global.market_isFirstPage = true;
+  global.market_btn_action = 'sort';
+  global.market_archive.reverse();
+  console.log(global.market_archive);
   resetMarket();
   rotateSortBtn();
   getCoins();
@@ -381,6 +404,7 @@ const sortMarket = () => {
 // Reset Market View
 const resetMarket = () => {
   marketResultContainer.innerHTML = '';
+
 }
 
 // Rotate Sort Button
@@ -394,11 +418,12 @@ const rotateSortBtn = () => {
 
 // Get Next Page of Market View
 const showNextMarketPage = () => {
-  global.market_page++;
-  if(global.market_lastIndex == marketArchive.length){
+  // global.market_page++;
+  if(global.market_lastIndex == global.market_archive.length){
     return;
   } else{
     global.market_btn_action = 'next';
+    global.market_isFirstPage = false;
     resetMarket();
     getCoins();
     checkButtons();
@@ -409,8 +434,9 @@ const showNextMarketPage = () => {
 
 // Get Prev Page of Market View
 const showPrevMarketPage = () => {
-  global.market_page--;
+  // global.market_page--;
   if(global.market_lastIndex <= 10){
+    global.market_isFirstPage = true;
     return;
   } else{
     global.market_btn_action = 'prev';
