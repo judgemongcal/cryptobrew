@@ -30,7 +30,8 @@ const global = {
   market_page: 1,
   market_sort: 'desc',
   market_isLastPage: 'false',
-  market_lastIndex: 0
+  market_lastIndex: 0,
+  market_btn_action: 'next'
 };
 
 
@@ -318,7 +319,17 @@ const displayMarket = (market) => {
   
   let marketLength = market.length;
   if(global.currentPath === '/market.html'){
-    marketLength = global.market_lastIndex + 10;
+    console.log(global.market_btn_action);
+    switch(global.market_btn_action){
+      case 'next':
+        marketLength = global.market_lastIndex + 10;
+        break;
+      case 'prev':
+        marketLength = global.market_lastIndex - 10;
+        global.market_lastIndex -= 20;
+        break;
+    }
+   
   }
 
     for(let i = global.market_lastIndex; i < marketLength; i++){
@@ -347,7 +358,7 @@ const displayMarket = (market) => {
       `
       marketResultContainer.appendChild(div);
       global.market_lastIndex++;
-    }
+    };
     console.log(global.market_lastIndex, marketLength);
 }
 
@@ -384,18 +395,30 @@ const rotateSortBtn = () => {
 // Get Next Page of Market View
 const showNextMarketPage = () => {
   global.market_page++;
-  resetMarket();
-  getCoins();
-  checkButtons();
+  if(global.market_lastIndex == marketArchive.length){
+    return;
+  } else{
+    global.market_btn_action = 'next';
+    resetMarket();
+    getCoins();
+    checkButtons();
+  }
+  
   
 }
 
 // Get Prev Page of Market View
 const showPrevMarketPage = () => {
   global.market_page--;
-  getCoins();
-  resetMarket();
-  checkButtons();
+  if(global.market_lastIndex <= 10){
+    return;
+  } else{
+    global.market_btn_action = 'prev';
+    resetMarket();
+    getCoins();
+    checkButtons();
+  }
+  
 }
 
 // Search Market
