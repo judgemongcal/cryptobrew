@@ -386,6 +386,12 @@ button{
     font-family: 'Space Grotesk', sans-serif;
 }
 
+.pagination {
+    font-size: 0.85rem;
+    grid-column: span 2;
+    justify-content: center;
+    align-items: center;
+}
 
 
 
@@ -417,6 +423,7 @@ button{
     display: grid;
     grid-template-columns: 1fr 1fr 0.5fr 0.5fr;
     gap: 0.5rem;
+    align-items: center;
 
 }
 

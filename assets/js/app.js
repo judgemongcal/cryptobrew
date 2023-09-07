@@ -11,6 +11,7 @@ const marketResultContainer = document.querySelector('.market-result');
 const sortArrow = document.querySelector('.market-rank');
 const sortIcon = document.querySelector('#arrow-sort');
 const search = document.querySelector('#search-query');
+const pagination = document.querySelector('.pagination');
 // let global.market_archive = [];
 const today = new Date();
 
@@ -396,6 +397,7 @@ const sortMarket = () => {
   rotateSortBtn();
   getCoins();
   checkButtons();
+  updatePagination();
 
   
   
@@ -418,7 +420,7 @@ const rotateSortBtn = () => {
 
 // Get Next Page of Market View
 const showNextMarketPage = () => {
-  // global.market_page++;
+  global.market_page++;
   if(global.market_lastIndex == global.market_archive.length){
     return;
   } else{
@@ -427,6 +429,7 @@ const showNextMarketPage = () => {
     resetMarket();
     getCoins();
     checkButtons();
+    updatePagination();
   }
   
   
@@ -434,7 +437,7 @@ const showNextMarketPage = () => {
 
 // Get Prev Page of Market View
 const showPrevMarketPage = () => {
-  // global.market_page--;
+  global.market_page--;
   if(global.market_lastIndex <= 10){
     global.market_isFirstPage = true;
     return;
@@ -443,6 +446,7 @@ const showPrevMarketPage = () => {
     resetMarket();
     getCoins();
     checkButtons();
+    updatePagination();
   }
   
 }
@@ -461,6 +465,12 @@ const searchMarket = (e) => {
     }
   })
 };
+
+const updatePagination = () => {
+  pagination.innerHTML = `
+  <p>Showing <strong>${global.market_page}</strong> out of 25 pages</p>
+  `
+}
 
 
   
@@ -494,6 +504,7 @@ const init = () => {
         searchMarket(e.target.value);
       });
       checkButtons();
+      updatePagination();
 
       break;
   }
@@ -503,10 +514,7 @@ const init = () => {
 
 
 
-
-
-
-init();
+document.addEventListener('DOMContentLoaded', init);
 
 
 
