@@ -11,6 +11,7 @@ const marketResultContainer = document.querySelector('.market-result');
 const sortArrow = document.querySelector('.market-rank');
 const sortIcon = document.querySelector('#arrow-sort');
 const search = document.querySelector('#search-query');
+let marketArchive = [];
 const today = new Date();
 
 const global = {
@@ -28,7 +29,8 @@ const global = {
   market_order: 'desc',
   market_page: 1,
   market_sort: 'desc',
-  market_isLastPage: 'false'
+  market_isLastPage: 'false',
+  market_lastIndex: 0
 };
 
 
@@ -267,16 +269,22 @@ const getCoins = async () => {
         break;
 
       case '/market.html':
-        marketCoins = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${global.market_currency}&order=market_cap_${global.market_order}&per_page=10&page=${global.market_page}`);
-        marketRes = await marketCoins.json();
-        if(marketRes.length < 10){
-          global.market_isLastPage = true;
-        } else{
-          global.market_isLastPage = false;
+        // marketCoins = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${global.market_currency}&order=market_cap_${global.market_order}&per_page=10&page=${global.market_page}`);
+        if(marketArchive.length === 0){
+          marketCoins = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${global.market_currency}&order=market_cap_${global.market_order}&per_page=500`);
+          marketRes = await marketCoins.json();
+          marketArchive = marketRes;
+          displayMarket(marketRes);
         }
-        console.log(marketRes);
-        displayMarket(marketRes);
-        break;
+        else{
+          displayMarket(marketArchive);
+        }
+        // if(marketRes.length < 10){
+        //   global.market_isLastPage = true;
+        // } else{
+        //   global.market_isLastPage = false;
+        // }
+        console.log(marketRes, marketArchive);
     }
  
 }
@@ -307,7 +315,13 @@ const displayTrending = (trending, btc) => {
 
 // Display Market View to DOM
 const displayMarket = (market) => { 
-    for(let i = 0; i < market.length; i++){
+  
+  let marketLength = market.length;
+  if(global.currentPath === '/market.html'){
+    marketLength = global.market_lastIndex + 10;
+  }
+
+    for(let i = global.market_lastIndex; i < marketLength; i++){
       const div = document.createElement('div');
       const change24H = parseInt(market[i].price_change_percentage_24h);
       div.classList.add('coin-market-div', 'shadow-1');
@@ -332,7 +346,9 @@ const displayMarket = (market) => {
   </div>
       `
       marketResultContainer.appendChild(div);
+      global.market_lastIndex++;
     }
+    console.log(global.market_lastIndex, marketLength);
 }
 
 
@@ -368,9 +384,10 @@ const rotateSortBtn = () => {
 // Get Next Page of Market View
 const showNextMarketPage = () => {
   global.market_page++;
-  getCoins();
   resetMarket();
+  getCoins();
   checkButtons();
+  
 }
 
 // Get Prev Page of Market View
@@ -385,7 +402,6 @@ const showPrevMarketPage = () => {
 const searchMarket = (e) => {
   const coins = document.querySelectorAll('.coin-market-div');
   const query = e.toLowerCase();
-  console.log(e,coins);
   coins.forEach(coin => {
     const id = coin.id;
     console.log(coin.id);
