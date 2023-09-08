@@ -193,7 +193,7 @@ const checkButtons = () => {
   switch(global.currentPath){
     case '/news.html':
       // Prev Button
-    if(global.market_page <= 1){
+    if(global.currentPage === 0){
     prevBtn.disabled = true;
     prevBtn.style.pointerEvents = 'none';
     } else {
@@ -202,7 +202,7 @@ const checkButtons = () => {
     }
   
     // Next Button
-    if(global.market_isLastPage){
+    if(global.isLastPage){
       nextBtn.disabled = true;
       nextBtn.style.pointerEvents = 'none';
     } else{
@@ -210,6 +210,7 @@ const checkButtons = () => {
       nextBtn.style.pointerEvents = 'auto';
     };
     break;
+
 
     case '/market.html':
      // Prev Button
