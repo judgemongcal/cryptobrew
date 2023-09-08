@@ -510,6 +510,10 @@ const initMarketModal = () => {
   document.addEventListener('click', function(e){
     if(e.target.parentElement.id){
      showMarketModal(e.target.parentElement.id);
+    } else if(e.target.children[1]) {
+        if(e.target.children[1].children[1].id){
+          showMarketModal(e.target.children[1].children[1].id);
+        }
     } else {
       return;
     };
@@ -521,12 +525,29 @@ const showMarketModal = async (coinId)  => {
   const res = await data.json();
   console.log(res);
 
+  const div = document.createElement('div');
 
-  // const apiUrl = `https://api.coingecko.com/api/v3/coins/${coinId}`;
-  // const data = await fetch(apiUrl);
-  // const json = await data.json();
-  // console.log(json);
-}
+  div.classList.add('modal-content');
+        div.innerHTML = `
+        <button class="exit-modal shadow-1 exit">
+              <svg class="exit" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                  <path class ="exit" d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg>
+          </button>
+          <div class="modal-news-content">
+          <h1 class="news-title">${res.id[0].toUpperCase() + res.id.substring(1)} (${res.symbol.toUpperCase()})</h1>
+           <img src="${res.image.thumb}" alt="">
+              <p id="news-date" class="heavy">3535</p>
+              <p id="news-source" class="heavy">35535</p>
+              <p id="news-summary">3535</p>
+              <button class="view-source-btn heavy shadow-1 primary-btn">
+                  <a href="https://www.coingecko.com/en/coins/${res.id}" target="_blank">VIEW SOURCE</a>
+              </button>
+          </div>
+        `;
+        modalEl.appendChild(div);
+        modalEl.style.display = 'flex';
+};
 
 // Router
 const init = () => {
