@@ -543,7 +543,10 @@ const init = () => {
             console.log(e.target.parentElement.querySelector('.news-details'));
             const newsDiv = e.target.parentElement.querySelector('.news-details');
             showModal(newsDiv);
-          }
+          } 
+      });
+      document.addEventListener('click', (e) => {
+        if(e.target.classList.contains('exit')) exitModal();
       });
       break;
     case '/news.html': 
