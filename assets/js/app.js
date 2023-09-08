@@ -82,23 +82,48 @@ const displayNews = async (result) => {
     const div = document.createElement('div');
 
     switch(global.currentPath){
-      case '/index.html':
-        div.classList.add('swiper-slide');
-        div.innerHTML = `
-        <div class="swiper-slide">
-        ${
-          source[i].multimedia[22]? `<img src="https://www.nytimes.com/${source[i].multimedia[22].url}" alt="">` :
-          `<img src="./assets/images/image_pholder.webp" alt="">`
+      case '/index.html': 
+        if(global.news_id){
+          div.classList.add('modal-content');
+          div.innerHTML = `
+          <button class="exit-modal shadow-1 exit">
+                <svg class="exit" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                    <path class ="exit" d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                  </svg>
+            </button>
+            <div class="modal-news-content">
+            <h1 class="news-title">${source[i].headline.main}</h1>
+            ${source[i].multimedia[22]? `<img src="https://www.nytimes.com/${source[i].multimedia[22].url}" alt="">` :
+            `<img src="./assets/images/image_pholder.webp" alt="">`}
+                
+                <p id="news-date" class="heavy">${finalDate}</p>
+                <p id="news-source" class="heavy">${source[i].source}</p>
+                <p id="news-summary">${source[i].snippet}</p>
+                <button class="view-source-btn heavy shadow-1 primary-btn">
+                    <a href="${source[i].web_url}" target="_blank">VIEW SOURCE</a>
+                </button>
+            </div>
+          `;
+          modalEl.appendChild(div);
+        } else{
+          div.classList.add('swiper-slide');
+          div.innerHTML = `
+          <div class="swiper-slide">
+          ${
+            source[i].multimedia[22]? `<img src="https://www.nytimes.com/${source[i].multimedia[22].url}" alt="">` :
+            `<img src="./assets/images/image_pholder.webp" alt="">`
+          }
+          <div class="news-details" id="${source[i].uri}">
+            <h2 class="news-title">${source[i].headline.main}</h2>
+            <p id="news-date" class="heavy">${finalDate}</p>
+            <p id="news-source" class="heavy">${source[i].source}</p>
+            <p id="news-summary">${source[i].abstract}</p>
+        </div>
+          `;
+      
+          indexNewsSlide.appendChild(div);
         }
-        <div class="news-details" id="${source[i].uri}">
-          <h2 class="news-title">${source[i].headline.main}</h2>
-          <p id="news-date" class="heavy">${finalDate}</p>
-          <p id="news-source" class="heavy">${source[i].source}</p>
-          <p id="news-summary">${source[i].abstract}</p>
-      </div>
-        `;
-    
-        indexNewsSlide.appendChild(div);
+       
         break;
 
       case '/news.html':
@@ -245,8 +270,17 @@ const exitModal = () => {
 
 
 const showModal = async (e) => {
-  e.target.id.includes('nyt')? global.news_id = e.target.id :
-  global.news_id = e.target.parentElement.id;
+  switch(global.currentPath){
+    case '/index.html':
+      global.news_id = e.id;
+      console.log(e.id);
+      break;
+    case '/news.html':
+      e.target.id.includes('nyt')? global.news_id = e.target.id :
+      global.news_id = e.target.parentElement.id;
+      console.log(global.news_id);
+      break;
+  }
   modalEl.innerHTML = '';
   const res = await getNews();
   displayNews(res);
@@ -483,6 +517,13 @@ const init = () => {
     case '/index.html': 
       displayNews(getNews());
       getCoins();
+      document.addEventListener('click', function (e) {
+          if(e.target.parentElement.classList.contains('swiper-slide')){
+            console.log(e.target.parentElement.querySelector('.news-details'));
+            const newsDiv = e.target.parentElement.querySelector('.news-details');
+            showModal(newsDiv);
+          }
+      });
       break;
     case '/news.html': 
       displayNews(getNews());
@@ -494,7 +535,7 @@ const init = () => {
       checkButtons();
       document.addEventListener('click', (e) => {
         if(e.target.classList.contains('exit')) exitModal();
-      })
+      });
       break;
       case '/market.html':
       getCoins();
