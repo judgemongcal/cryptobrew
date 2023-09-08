@@ -83,29 +83,7 @@ const displayNews = async (result) => {
 
     switch(global.currentPath){
       case '/index.html': 
-        if(global.news_id){
-          div.classList.add('modal-content');
-          div.innerHTML = `
-          <button class="exit-modal shadow-1 exit">
-                <svg class="exit" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                    <path class ="exit" d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                  </svg>
-            </button>
-            <div class="modal-news-content">
-            <h1 class="news-title">${source[i].headline.main}</h1>
-            ${source[i].multimedia[22]? `<img src="https://www.nytimes.com/${source[i].multimedia[22].url}" alt="">` :
-            `<img src="./assets/images/image_pholder.webp" alt="">`}
-                
-                <p id="news-date" class="heavy">${finalDate}</p>
-                <p id="news-source" class="heavy">${source[i].source}</p>
-                <p id="news-summary">${source[i].snippet}</p>
-                <button class="view-source-btn heavy shadow-1 primary-btn">
-                    <a href="${source[i].web_url}" target="_blank">VIEW SOURCE</a>
-                </button>
-            </div>
-          `;
-          modalEl.appendChild(div);
-        } else{
+    
           div.classList.add('swiper-slide');
           div.innerHTML = `
           <div class="swiper-slide">
@@ -121,36 +99,10 @@ const displayNews = async (result) => {
         </div>
           `;
       
-          indexNewsSlide.appendChild(div);
-        }
-       
+        indexNewsSlide.appendChild(div);
         break;
 
       case '/news.html':
-        if(global.news_id){
-          div.classList.add('modal-content');
-          div.innerHTML = `
-          <button class="exit-modal shadow-1 exit">
-                <svg class="exit" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                    <path class ="exit" d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                  </svg>
-            </button>
-            <div class="modal-news-content">
-            <h1 class="news-title">${source[i].headline.main}</h1>
-            ${source[i].multimedia[22]? `<img src="https://www.nytimes.com/${source[i].multimedia[22].url}" alt="">` :
-            `<img src="./assets/images/image_pholder.webp" alt="">`}
-                
-                <p id="news-date" class="heavy">${finalDate}</p>
-                <p id="news-source" class="heavy">${source[i].source}</p>
-                <p id="news-summary">${source[i].snippet}</p>
-                <button class="view-source-btn heavy shadow-1 primary-btn">
-                    <a href="${source[i].web_url}" target="_blank">VIEW SOURCE</a>
-                </button>
-            </div>
-          `;
-          modalEl.appendChild(div);
-          break;
-        } else{
           div.classList.add('news-card', 'shadow-1');
         div.innerHTML = `
           <div class="news-details" id="${source[i].uri}">
@@ -165,8 +117,76 @@ const displayNews = async (result) => {
         newsPageContainer.appendChild(div);
         break;
     };
-        }
+        
 
+  }
+};
+
+
+const displayNewsModal = (res) => {
+  
+  for(let i = 0; i < res.response.docs.length; i++){
+    const source = res.response.docs;
+    const givenDate = source[i].pub_date;
+    const date = new Date(givenDate);
+    const dateOption = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour:'numeric',
+      minute:'numeric'
+    };
+    const formater = new Intl.DateTimeFormat('en-US', dateOption);
+    const finalDate = formater.format(date);
+
+    const div = document.createElement('div');
+
+    if(global.currentPage === '/news.html'){
+      div.classList.add('modal-content');
+            div.innerHTML = `
+            <button class="exit-modal shadow-1 exit">
+                  <svg class="exit" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                      <path class ="exit" d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                    </svg>
+              </button>
+              <div class="modal-news-content">
+              <h1 class="news-title">${source[i].headline.main}</h1>
+              ${source[i].multimedia[22]? `<img src="https://www.nytimes.com/${source[i].multimedia[22].url}" alt="">` :
+              `<img src="./assets/images/image_pholder.webp" alt="">`}
+                  
+                  <p id="news-date" class="heavy">${finalDate}</p>
+                  <p id="news-source" class="heavy">${source[i].source}</p>
+                  <p id="news-summary">${source[i].snippet}</p>
+                  <button class="view-source-btn heavy shadow-1 primary-btn">
+                      <a href="${source[i].web_url}" target="_blank">VIEW SOURCE</a>
+                  </button>
+              </div>
+            `;
+            modalEl.appendChild(div);
+    } else {
+      div.classList.add('modal-content');
+      div.innerHTML = `
+      <button class="exit-modal shadow-1 exit">
+            <svg class="exit" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                <path class ="exit" d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+              </svg>
+        </button>
+        <div class="modal-news-content">
+        <h1 class="news-title">${source[i].headline.main}</h1>
+        ${source[i].multimedia[22]? `<img src="https://www.nytimes.com/${source[i].multimedia[22].url}" alt="">` :
+        `<img src="./assets/images/image_pholder.webp" alt="">`}
+            
+            <p id="news-date" class="heavy">${finalDate}</p>
+            <p id="news-source" class="heavy">${source[i].source}</p>
+            <p id="news-summary">${source[i].snippet}</p>
+            <button class="view-source-btn heavy shadow-1 primary-btn">
+                <a href="${source[i].web_url}" target="_blank">VIEW SOURCE</a>
+            </button>
+        </div>
+      `;
+      modalEl.appendChild(div);
+
+    }
   }
 };
 
@@ -283,8 +303,9 @@ const showModal = async (e) => {
   }
   modalEl.innerHTML = '';
   const res = await getNews();
-  displayNews(res);
   modalEl.style.display = 'flex';
+  displayNewsModal(res);
+  
 }
 
 // Trending and Market View Feature
