@@ -385,14 +385,14 @@ const displayMarket = (market) => {
       const div = document.createElement('div');
       const change24H = market[i].price_change_percentage_24h? parseInt(market[i].price_change_percentage_24h) : 'N/A';
       div.classList.add('coin-market-div', 'shadow-1');
-      div.setAttribute("id", `${market[i].id}`);
+      // div.setAttribute("id", `${market[i].id}`);
       div.innerHTML = `
       <p class="market-rank">${market[i].market_cap_rank != null? market[i].market_cap_rank : 'N/A' }</p>
       <div class="coin-market-details">
           <div class = "coin-market-img"> 
           <img src=${market[i].image} alt="">
           </div>
-          <div class = "coin-market-names"> 
+          <div class = "coin-market-names" id=${market[i].id}> 
           <p class="coin-market-name heavy">${market[i].name}</p>
            <p class="coin-market-ticker">${market[i].symbol.toUpperCase()}</p>
           </div>
@@ -508,17 +508,24 @@ const updatePagination = () => {
 
 const initMarketModal = () => {
   document.addEventListener('click', function(e){
-  if (e.target.classList.contains('coin-market-div') || 
-  e.target.parentElement.classList.contains('coin-market-div')|| 
-  e.target.parentElement.classList.contains('coin-market-details'))
-  {
-    showMarketModal();
-  }}
-  )
-};
+    if(e.target.parentElement.id){
+     showMarketModal(e.target.parentElement.id);
+    } else {
+      return;
+    };
+  
+})};
 
-const showMarketModal = () => {
-  modalEl.style.display = 'flex';
+const showMarketModal = async (coinId)  => {
+  const data = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}`);
+  const res = await data.json();
+  console.log(res);
+
+
+  // const apiUrl = `https://api.coingecko.com/api/v3/coins/${coinId}`;
+  // const data = await fetch(apiUrl);
+  // const json = await data.json();
+  // console.log(json);
 }
 
 // Router
