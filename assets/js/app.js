@@ -284,21 +284,26 @@ const checkButtons = () => {
 
 // Modal
 
-const exitModal = () => {
-  modalEl.style.display = 'none';
-};
+// Initialize Modals
 
+const initIndexModal = () => {
+  document.addEventListener('click', function (e) {
+    if(e.target.parentElement.classList.contains('swiper-slide')){
+      const newsDiv = e.target.parentElement.querySelector('.news-details');
+      showModal(newsDiv);
+    } 
+});
+}
 
 const showModal = async (e) => {
   switch(global.currentPath){
     case '/index.html':
       global.news_id = e.id;
-      console.log(e.id);
       break;
+
     case '/news.html':
       e.target.id.includes('nyt')? global.news_id = e.target.id :
       global.news_id = e.target.parentElement.id;
-      console.log(global.news_id);
       break;
   }
   modalEl.innerHTML = '';
@@ -307,6 +312,19 @@ const showModal = async (e) => {
   displayNewsModal(res);
   
 }
+
+const initModalExit = () => {
+  document.addEventListener('click', (e) => {
+    if(e.target.classList.contains('exit')) exitModal();
+  });
+}
+
+const exitModal = () => {
+  modalEl.style.display = 'none';
+};
+
+
+
 
 // Trending and Market View Feature
 
@@ -329,7 +347,6 @@ const getCoins = async () => {
         break;
 
       case '/market.html':
-        // marketCoins = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${global.market_currency}&order=market_cap_${global.market_order}&per_page=10&page=${global.market_page}`);
         if(global.market_archive.length === 0){
           marketCoins = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${global.market_currency}&order=market_cap_${global.market_order}&per_page=500`);
           marketRes = await marketCoins.json();
@@ -339,12 +356,6 @@ const getCoins = async () => {
         else{
           displayMarket(global.market_archive);
         }
-        // if(marketRes.length < 10){
-        //   global.market_isLastPage = true;
-        // } else{
-        //   global.market_isLastPage = false;
-        // }
-        console.log(marketRes, global.market_archive);
     }
  
 }
@@ -378,21 +389,13 @@ const displayMarket = (market) => {
   
   let marketLength = market.length;
   if(global.currentPath === '/market.html'){
-    console.log(global.market_btn_action);
     switch(global.market_btn_action){
-      // case 'start': 
-      //   marketLength = 10;
-      //   global.market_lastIndex = 0;
-      //   console.log('here sort');
-      //   break;
       case 'next':
         marketLength = global.market_lastIndex + 10;
-        console.log('here next');
         break;
       case 'prev':
         marketLength = global.market_lastIndex - 10;
         global.market_lastIndex -= 20;
-        console.log('here prev');
         break;
       default: 
         marketLength = 10;
@@ -434,7 +437,6 @@ const displayMarket = (market) => {
     } else if(marketLength <= 10){
       global.market_isFirstPage = true;
     }
-    console.log(global.market_lastIndex, marketLength);
 }
 
 
@@ -448,7 +450,6 @@ const sortMarket = () => {
   global.market_isFirstPage = true;
   global.market_btn_action = 'sort';
   global.market_archive.reverse();
-  console.log(global.market_archive);
   resetMarket();
   rotateSortBtn();
   getCoins();
@@ -513,7 +514,6 @@ const searchMarket = (e) => {
   const query = e.toLowerCase();
   coins.forEach(coin => {
     const id = coin.id;
-    console.log(coin.id);
   if(id.indexOf(query) !== -1){
       coin.style.display = 'grid';
     } else{
@@ -529,26 +529,21 @@ const updatePagination = () => {
 }
 
 
-  
-
 
 // Router
 const init = () => {
   switch(global.currentPath) {
+
+    // Index Page
     case '/index.html': 
       displayNews(getNews());
       getCoins();
-      document.addEventListener('click', function (e) {
-          if(e.target.parentElement.classList.contains('swiper-slide')){
-            console.log(e.target.parentElement.querySelector('.news-details'));
-            const newsDiv = e.target.parentElement.querySelector('.news-details');
-            showModal(newsDiv);
-          } 
-      });
-      document.addEventListener('click', (e) => {
-        if(e.target.classList.contains('exit')) exitModal();
-      });
+      initIndexModal();
+      initModalExit();
+
       break;
+
+    // News Page
     case '/news.html': 
       displayNews(getNews());
       newsNewestBtn.addEventListener('click', newestFirst);
@@ -557,10 +552,10 @@ const init = () => {
       prevBtn.addEventListener('click', showPrevNews);
       newsPageContainer.addEventListener('click', showModal);
       checkButtons();
-      document.addEventListener('click', (e) => {
-        if(e.target.classList.contains('exit')) exitModal();
-      });
+      initModalExit();
       break;
+
+      // Market Page
       case '/market.html':
       getCoins();
       sortArrow.addEventListener('click', sortMarket);
