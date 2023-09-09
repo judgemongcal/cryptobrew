@@ -375,11 +375,16 @@ button{
     font-size: 0.5rem;
 }
 
+.modal{
+    justify-content: center;
+}
+
 
 
 .modal-content{
-    font-size: 0.6rem;
+font-size: 0.85rem;
 }
+
 .coin-main-details{
 display: flex;
 flex-direction: row;
@@ -387,7 +392,11 @@ align-items: center;
 justify-content: center;
 margin-top: 2rem;
 margin-bottom: 1.5rem;
+width: 50%;
+margin-left: auto;
+margin-right: auto;
 }
+
 
 .coin-main-details img{
 width: 50px;
@@ -515,7 +524,7 @@ margin-right: 0.5rem;
     transition: all 0.4s ease-out;
 }
 
-.modal-content{
+.modal-content, .market-modal-content{
     background-color: var(--white);
     padding: 2.5rem 2rem;
     margin: auto 1rem;
@@ -707,7 +716,7 @@ svg{
     justify-content: center;
 }
 
-.modal-content{
+.modal-content, .market-modal-content{
     width: 30rem;
 }
 
@@ -778,7 +787,7 @@ svg{
     align-items: center;
 }
 
-.modal-content{
+.modal-content, .market-modal-content{
     width: 40rem;
 }
 
@@ -791,6 +800,12 @@ svg{
     font-size: 1.5rem;
     margin-top: 0.5rem;
 }
+
+.coin-main-details{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    }
 
 /* Market Section */
 

@@ -534,7 +534,7 @@ const showMarketModal = async (coinId)  => {
   modalEl.innerHTML = '';
   const div = document.createElement('div');
 
-  div.classList.add('modal-content');
+  div.classList.add('market-modal-content');
         div.innerHTML = `
        
           <div class="modal-market-content">
