@@ -126,6 +126,7 @@ const displayNews = async (result) => {
 const displayNewsModal = (res) => {
   
   for(let i = 0; i < res.response.docs.length; i++){
+    modalEl.innerHTML = '';
     const source = res.response.docs;
     const givenDate = source[i].pub_date;
     const date = new Date(givenDate);
@@ -143,11 +144,6 @@ const displayNewsModal = (res) => {
 
       div.classList.add('modal-content');
             div.innerHTML = `
-            <button class="exit-modal shadow-1 exit">
-                  <svg class="exit" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                      <path class ="exit" d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                    </svg>
-              </button>
               <div class="modal-news-content">
               <h1 class="news-title">${source[i].headline.main}</h1>
               ${source[i].multimedia[22]? `<img src="https://www.nytimes.com/${source[i].multimedia[22].url}" alt="">` :
@@ -159,6 +155,10 @@ const displayNewsModal = (res) => {
                   <button class="view-source-btn heavy shadow-1 primary-btn">
                       <a href="${source[i].web_url}" target="_blank">VIEW SOURCE</a>
                   </button>
+                  <button class="news-modal-return-btn heavy shadow-1 primary-btn exit">
+                  <a>RETURN</a>
+              </button>
+
               </div>
             `;
             modalEl.appendChild(div);
@@ -526,35 +526,32 @@ const showMarketModal = async (coinId)  => {
   console.log(res);
   modalEl.innerHTML = '';
   const desc = res.description.en;
-  const shortDesc = desc.split('\n\n');
-  console.log(shortDesc);
   const div = document.createElement('div');
 
   div.classList.add('modal-content');
         div.innerHTML = `
-        <button class="exit-modal shadow-1 exit">
-            <svg class="exit" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-            <path class ="exit" d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-          </svg>
-          </button>
+       
           <div class="modal-market-content">
           <div class="coin-main-details">
             <img src="${res.image.large}" alt="">
             <h1 class="coin-title">${res.name} (${res.symbol.toUpperCase()})</h1>
           </div>
-          <p id="coin-start">Genesist Date: <span id="heavy">${res.genesis_date}</span></p>
-          <p id="coin-rank">Market Cap Rank: <span id="heavy">${res.market_cap_rank}</span></p>
-          <p id="coin-price">$<span id="heavy">Current Price: ${res.market_data.current_price.usd.toLocaleString()}</span></p>
-          <p id="coin-price">$<span id="heavy">Circulating Supply: ${res.market_data.circulating_supply.toLocaleString()}</span></p>
-          <p id="coin-cap-change">In the last 24 hours: <span class="heavy ${res.market_data.market_cap_change_percentage_24h > 0? `positive` : `negative`}">${res.market_data.market_cap_change_percentage_24h}%</span></p>
-          <p id="coin-cap-change">${res.description.en}</p>
+          <h2 id="coin-start"><span id="heavy">Genesis Date:</span> ${res.genesis_date? res.genesis_date : `N/A`}</h2>
+          <h2 id="coin-rank"><span id="heavy">Market Cap Rank:</span> ${res.market_cap_rank? res.market_cap_rank : `N/A`}</h2>
+          <h2 id="coin-price"><span id="heavy">Current Price:</span> $${res.market_data.current_price.usd? res.market_data.current_price.usd.toLocaleString() : `N/A`}</h2>
+          <h2 id="coin-price"><span id="heavy">Circulating Supply:</span> $${res.market_data.circulating_supply? res.market_data.circulating_supply.toLocaleString() : `N/A`}</h2>
+          <h2 id="coin-cap-change"><span id="heavy"> In the last 24 hours:</span> <span class="${res.market_data.market_cap_change_percentage_24h > 0? `positive` : `negative`}">${res.market_data.market_cap_change_percentage_24h}%</span></h2>
 
 
           <button class="view-source-btn heavy shadow-1 primary-btn">
             <a href="https://www.coingecko.com/en/coins/${res.id}" target="_blank">VIEW SOURCE</a>
           </button>
+          <button class="modal-return-btn heavy shadow-1 primary-btn exit">
+          <a>RETURN</a>
+          </button>
+          
           </div>
-  //       `;
+         `;
         modalEl.appendChild(div);
         modalEl.style.display = 'flex';
 };
