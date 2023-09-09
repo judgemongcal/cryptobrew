@@ -74,13 +74,62 @@
             </div>
         </section>
         
-        <div class="news-modal exit">
+        <div class="modal exit">
+            <!-- <div class="modal-content">
+                <button class="exit-modal shadow-1 exit">
+                    <svg class="exit" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                        <path class ="exit" d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                      </svg>
+                </button>
+                <div class="modal-market-content">
+                    <div class="coin-main-details">
+                        <img src="${res.image.thumb}" alt="">
+                        <h1 class="coin-title">Bitcoin (BTC)</h1>
+                    </div>
+                    <p id="coin-start">Genesist Date: <span id="heavy">${res.genesis_date}</span></p>
+                    <p id="coin-rank">Market Cap Rank: <span id="heavy">${res.market_cap_rank}</span></p>
+                    <p id="coin-price">$<span id="heavy">${res.market_data.current_price.usd}</span></p>
+                    <p id="coin-price">$<span id="heavy">${res.market_data.circulating_supply}</span></p>
+                    <p id="coin-cap-change">In the last 24 hours: $<span id="heavy">${res.market_data.market_cap_change_percentage_24h}</span></p>
+                    <p id="coin-cap-change">${res.description.en}</p>
+
+
+                    <button class="view-source-btn heavy shadow-1 primary-btn">
+                        <a href="https://www.coingecko.com/en/coins/${res.id}" target="_blank">VIEW SOURCE</a>
+                    </button>
+                </div> -->
+            </div>
         </div>
 
     </div>
     
 <style>
-   
+
+    .modal{
+        /* display: flex; */
+        overflow: scroll;
+    }
+
+    .modal-content{
+        margin: 5rem 2rem;
+    }
+   .coin-main-details{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3rem;
+   }
+
+   .coin-main-details img{
+    width: 50px;
+    height: 50px;
+    margin-right: 1rem;
+   }
+
+   #heavy{
+    font-weight: 700;
+   }
    
 </style>
 

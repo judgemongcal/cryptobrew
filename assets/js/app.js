@@ -4,7 +4,7 @@ const newsNewestBtn = document.querySelector('.newest');
 const newsOldestBtn = document.querySelector('.oldest');
 const nextBtn = document.querySelector('.next');
 const prevBtn = document.querySelector('.previous');
-const modalEl = document.querySelector('.news-modal');
+const modalEl = document.querySelector('.modal');
 const trendingContainer = document.querySelector('.trending-container');
 const marketContainer = document.querySelector('.market-container');
 const marketResultContainer = document.querySelector('.market-result');
@@ -524,27 +524,37 @@ const showMarketModal = async (coinId)  => {
   const data = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}`);
   const res = await data.json();
   console.log(res);
-
+  modalEl.innerHTML = '';
+  const desc = res.description.en;
+  const shortDesc = desc.split('\n\n');
+  console.log(shortDesc);
   const div = document.createElement('div');
 
   div.classList.add('modal-content');
         div.innerHTML = `
         <button class="exit-modal shadow-1 exit">
-              <svg class="exit" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                  <path class ="exit" d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                </svg>
+            <svg class="exit" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+            <path class ="exit" d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+          </svg>
           </button>
-          <div class="modal-news-content">
-          <h1 class="news-title">${res.id[0].toUpperCase() + res.id.substring(1)} (${res.symbol.toUpperCase()})</h1>
-           <img src="${res.image.thumb}" alt="">
-              <p id="news-date" class="heavy">3535</p>
-              <p id="news-source" class="heavy">35535</p>
-              <p id="news-summary">3535</p>
-              <button class="view-source-btn heavy shadow-1 primary-btn">
-                  <a href="https://www.coingecko.com/en/coins/${res.id}" target="_blank">VIEW SOURCE</a>
-              </button>
+          <div class="modal-market-content">
+          <div class="coin-main-details">
+            <img src="${res.image.large}" alt="">
+            <h1 class="coin-title">${res.name} (${res.symbol.toUpperCase()})</h1>
           </div>
-        `;
+          <p id="coin-start">Genesist Date: <span id="heavy">${res.genesis_date}</span></p>
+          <p id="coin-rank">Market Cap Rank: <span id="heavy">${res.market_cap_rank}</span></p>
+          <p id="coin-price">$<span id="heavy">Current Price: ${res.market_data.current_price.usd.toLocaleString()}</span></p>
+          <p id="coin-price">$<span id="heavy">Circulating Supply: ${res.market_data.circulating_supply.toLocaleString()}</span></p>
+          <p id="coin-cap-change">In the last 24 hours: <span class="heavy ${res.market_data.market_cap_change_percentage_24h > 0? `positive` : `negative`}">${res.market_data.market_cap_change_percentage_24h}%</span></p>
+          <p id="coin-cap-change">${res.description.en}</p>
+
+
+          <button class="view-source-btn heavy shadow-1 primary-btn">
+            <a href="https://www.coingecko.com/en/coins/${res.id}" target="_blank">VIEW SOURCE</a>
+          </button>
+          </div>
+  //       `;
         modalEl.appendChild(div);
         modalEl.style.display = 'flex';
 };
@@ -560,6 +570,7 @@ const init = () => {
       initIndexModal();
       initModalExit();
       initMarketModal();
+      // modalEl.style.display = 'flex';
       break;
 
     // News Page
