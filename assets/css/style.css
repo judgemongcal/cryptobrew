@@ -272,6 +272,10 @@ button{
     color: var(--black);
 }
 
+.coin-details p{
+    font-weight: 700;
+}
+
 /* ----- Market View Section ----- */
 
 .market-container{
@@ -365,6 +369,32 @@ button{
     margin-bottom: 5rem;
 }
 
+.modal-market-content{
+    /* display: flex; */
+    text-align: center;
+    font-size: 0.5rem;
+}
+
+
+
+.modal-content{
+    font-size: 0.6rem;
+}
+.coin-main-details{
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+margin-top: 2rem;
+margin-bottom: 1.5rem;
+}
+
+.coin-main-details img{
+width: 50px;
+height: 50px;
+margin-right: 0.5rem;
+}
+
 /* ----------------------------------- Market View Page -----------------------------------  */ 
 
 /* Search Section */
@@ -402,6 +432,16 @@ button{
     align-items: center;
 }
 
+.flex{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 3px;
+}
+
+.market-rank{
+    cursor: pointer;
+}
 
 
 

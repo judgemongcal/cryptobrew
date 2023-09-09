@@ -339,10 +339,11 @@ const getCoins = async () => {
 // Display Trending Coins to DOM
 const displayTrending = (trending, btc) => {
   const btcPrice = btc.bitcoin.usd;
-  
+  console.log(trending);
   for(let i = 0; i < trending.coins.length; i++){
     const div = document.createElement('div');
     div.classList.add(`grid-card`,`grid-${i+1}`, `shadow-1`);
+    div.setAttribute('id', `${trending.coins[i].item.id}`);
     div.innerHTML = `
     <h1 class="rank">#${i + 1}</h1>
     <div class="coin-img">
@@ -353,7 +354,7 @@ const displayTrending = (trending, btc) => {
       <p class="heavy">$${trending.coins[i].item.price_btc * btcPrice < 10? (trending.coins[i].item.price_btc * btcPrice).toFixed(4)
             : parseInt((trending.coins[i].item.price_btc * btcPrice).toFixed(2)).toLocaleString()
             }</p>
-      <p>Market Cap Rank: ${trending.coins[i].item.market_cap_rank}</p>
+      <p>Market Cap Rank: <span id="heavy">${trending.coins[i].item.market_cap_rank}</span></p>
     </div>
     `
     trendingContainer.appendChild(div);
@@ -385,7 +386,7 @@ const displayMarket = (market) => {
       const div = document.createElement('div');
       const change24H = market[i].price_change_percentage_24h? parseInt(market[i].price_change_percentage_24h) : 'N/A';
       div.classList.add('coin-market-div', 'shadow-1');
-      // div.setAttribute("id", `${market[i].id}`);
+      div.setAttribute("id", `${market[i].id}`);
       div.innerHTML = `
       <p class="market-rank">${market[i].market_cap_rank != null? market[i].market_cap_rank : 'N/A' }</p>
       <div class="coin-market-details">
@@ -508,16 +509,22 @@ const updatePagination = () => {
 
 const initMarketModal = () => {
   document.addEventListener('click', function(e){
-    if(e.target.parentElement.id){
+    console.log(e.target);
+    if(e.target.id){
+      showMarketModal(e.target.id);
+    }else if(e.target.parentElement.id){
      showMarketModal(e.target.parentElement.id);
-    } else if(e.target.children[1]) {
+    }else if(e.target.children[1]) {
         if(e.target.children[1].children[1].id){
           showMarketModal(e.target.children[1].children[1].id);
         }
+    }else if(e.target.parentElement.parentElement.id){
+      showMarketModal(e.target.parentElement.parentElement.id);
+    }else if(e.target.classList.contains('coin-img') || e.target.classList.contains('coin-details')){
+      showMarketModal(e.target.parentElement.id);
     } else {
       return;
     };
-  
 })};
 
 const showMarketModal = async (coinId)  => {
@@ -525,7 +532,6 @@ const showMarketModal = async (coinId)  => {
   const res = await data.json();
   console.log(res);
   modalEl.innerHTML = '';
-  const desc = res.description.en;
   const div = document.createElement('div');
 
   div.classList.add('modal-content');
@@ -539,8 +545,8 @@ const showMarketModal = async (coinId)  => {
           <h2 id="coin-start"><span id="heavy">Genesis Date:</span> ${res.genesis_date? res.genesis_date : `N/A`}</h2>
           <h2 id="coin-rank"><span id="heavy">Market Cap Rank:</span> ${res.market_cap_rank? res.market_cap_rank : `N/A`}</h2>
           <h2 id="coin-price"><span id="heavy">Current Price:</span> $${res.market_data.current_price.usd? res.market_data.current_price.usd.toLocaleString() : `N/A`}</h2>
-          <h2 id="coin-price"><span id="heavy">Circulating Supply:</span> $${res.market_data.circulating_supply? res.market_data.circulating_supply.toLocaleString() : `N/A`}</h2>
-          <h2 id="coin-cap-change"><span id="heavy"> In the last 24 hours:</span> <span class="${res.market_data.market_cap_change_percentage_24h > 0? `positive` : `negative`}">${res.market_data.market_cap_change_percentage_24h}%</span></h2>
+          <h2 id="coin-price"><span id="heavy">Circulating Supply:</span> ${res.market_data.circulating_supply? res.market_data.circulating_supply.toLocaleString() : `N/A`}</h2>
+          <h2 id="coin-cap-change"><span id="heavy"> In the last 24 hours:</span> <span class="${res.market_data.market_cap_change_percentage_24h > 0? `positive` : `negative`}">${res.market_data.market_cap_change_percentage_24h.toLocaleString()}%</span></h2>
 
 
           <button class="view-source-btn heavy shadow-1 primary-btn">
@@ -567,7 +573,6 @@ const init = () => {
       initIndexModal();
       initModalExit();
       initMarketModal();
-      // modalEl.style.display = 'flex';
       break;
 
     // News Page
@@ -584,6 +589,8 @@ const init = () => {
 
       // Market Page
       case '/market.html':
+      initModalExit();
+      initMarketModal();
       getCoins();
       sortArrow.addEventListener('click', sortMarket);
       nextBtn.addEventListener('click', showNextMarketPage);
@@ -593,6 +600,7 @@ const init = () => {
       });
       checkButtons();
       updatePagination();
+      
 
       break;
   }
