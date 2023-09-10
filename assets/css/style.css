@@ -129,12 +129,12 @@ button{
 
 
 
-
 .container-fluid{
     display: flex;
     /* flex-direction: column; */
     font-weight: 700;
     padding: 0;
+    justify-self: right;
 }
 
 .navbar-collapse a{
@@ -494,7 +494,7 @@ margin-right: 0.5rem;
 }
 
 .news-card:hover{
-    background-color: var(--primary2);
+    background-color: var(--primary);
     color: var(--white);
     transform: scale(1.03);
 }
@@ -535,6 +535,7 @@ margin-right: 0.5rem;
     color: var(--white);
     background-color: var(--primary);
 }
+
 
 
 
@@ -642,6 +643,18 @@ margin-right: 0.5rem;
 
 .greetings h2{
     font-size: 1.75rem;
+} 
+
+.greetings a svg{
+    margin-top: -0.4rem;
+}
+
+.greetings a svg:hover, .greetings a svg:active{
+    fill: var(--white);
+}
+
+.greetings a:hover, .greetings a:active {
+    background-color: var(--primary)
 }
 
 
@@ -707,6 +720,10 @@ margin-right: 0.5rem;
 .filter-btn p {
     font-size: 1.05rem;
     margin-left: 4px;
+}
+
+.filter button p{
+    font-size: 0.85rem;
 }
 
 svg{
@@ -853,7 +870,7 @@ svg{
 
     /* News Feature */
     
-    .index-container, .trending-container, .market, .greetings{
+    .index-container, .trending-container, .market, .greetings, .news-main-container{
         width: 60rem;
     }
 }
