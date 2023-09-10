@@ -96,23 +96,51 @@ button{
 
 .header{
     margin-top: 4rem;
-    margin-bottom: 6rem;
+    margin-bottom: 2rem;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 .header h1{
     font-size: 2rem;
 }
 
+.header .company h1{
+    font-size: 1.75rem;
+    margin-top: 0.1rem;
+}
 
 #company-logo{
-    width: 2.5rem;
+    width: 2.25rem;
+    height: auto;
     margin-right: 0.2rem;
 
 }
+
+.company{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+
+
+
+.container-fluid{
+    display: flex;
+    /* flex-direction: column; */
+    font-weight: 700;
+    padding: 0;
+}
+
+.navbar-collapse a{
+    font-size: 1.15rem;
+    margin-left: 2rem;
+}
+
 
 .greetings, .section-header{
     margin-bottom: 2.5rem;
