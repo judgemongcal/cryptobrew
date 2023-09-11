@@ -202,12 +202,16 @@ button{
 .news-details{
     margin-bottom: 2rem;
     text-align: justify;
-    /* margin: auto -1.5rem auto -1.5rem; */
+    padding: 1.25rem;
 }
 
 .news-title, .coin-title{
     text-align: left;
     margin-bottom: 5px;
+}
+
+.news-title{
+    margin-top: 10px;
 }
 
 
@@ -741,12 +745,12 @@ margin-right: 0.5rem;
 }
 
 .filter button p{
-    font-size: 0.85rem;
+    font-size: 0.75rem;
 }
 
 svg{
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 
 
@@ -882,6 +886,12 @@ svg{
     display: block;
 }
 
+
+/* ------- News Page ------- */
+
+.filter button p{
+    font-size: 0.95rem;
+}
 }
 
 
