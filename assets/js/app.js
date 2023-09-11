@@ -1,3 +1,4 @@
+const greetings = document.querySelector('.greetings');
 const indexNewsSlide = document.querySelector('.swiper-wrapper');
 const newsPageContainer = document.querySelector('.news-container');
 const newsNewestBtn = document.querySelector('.newest');
@@ -562,12 +563,32 @@ const showMarketModal = async (coinId)  => {
         modalEl.style.display = 'flex';
 };
 
+// Check Time and Update Greetings
+
+const updateGreetings = () => {
+  greetings.innerHTML = '';
+  if(today.getHours() < 12){
+    greetings.innerHTML = `
+    <h2>Good Morning. &#127774;</h2>
+    `;
+  } else if(today.getHours() > 12 && today.getHours() < 17){
+    greetings.innerHTML = `
+    <h2>Good Morning. &#127780;</h2>
+    `;
+  } else {
+    greetings.innerHTML = `
+    <h2>Good Evening. &#127762;</h2>
+    `;
+  }
+}
+
 // Router
 const init = () => {
   switch(global.currentPath) {
 
     // Index Page
     case '/index.html': 
+      updateGreetings();
       displayNews(getNews());
       getCoins();
       initIndexModal();
@@ -577,6 +598,7 @@ const init = () => {
 
     // News Page
     case '/news.html': 
+      updateGreetings();
       displayNews(getNews());
       newsNewestBtn.addEventListener('click', newestFirst);
       newsOldestBtn.addEventListener('click', oldestFirst);
@@ -589,6 +611,7 @@ const init = () => {
 
       // Market Page
       case '/market.html':
+      updateGreetings();
       initModalExit();
       initMarketModal();
       getCoins();
@@ -600,8 +623,6 @@ const init = () => {
       });
       checkButtons();
       updatePagination();
-      
-
       break;
   }
 }

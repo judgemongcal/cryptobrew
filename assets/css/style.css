@@ -306,6 +306,10 @@ button{
     font-weight: 700;
 }
 
+.grid-card{
+    cursor: pointer;
+}
+
 /* ----- Market View Section ----- */
 
 .market-container{
@@ -339,6 +343,7 @@ button{
     margin-bottom: 1rem;
     /* gap: 7px; */
     transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .coin-market-names{
@@ -637,10 +642,6 @@ margin-right: 0.5rem;
     margin: auto auto;
 }
 
-.header{
-    margin-left: 0;
-    margin-right: 0;
-}
 
 .header h1{
     font-size: 2rem;
@@ -808,10 +809,6 @@ svg{
 
 }
 
-.header{
-    margin-left: 0;
-    margin-right: 0;
-}
 
 .header h1{
     font-size: 3rem;
