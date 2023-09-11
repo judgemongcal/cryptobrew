@@ -72,6 +72,7 @@ p{
 
 a{
     text-decoration: none;
+
 }
 
 button{
@@ -156,7 +157,7 @@ button{
 }
 
 .main-btn{
-    padding: 12px 12px 6px 12px;
+    padding: 12px 16px 12px 16px;
     justify-content: center;
     border-radius: 100%;
     transition: all 0.3s ease-in;
@@ -440,19 +441,24 @@ margin-right: 0.5rem;
 .search{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 .search-area input{
-    padding: 0.5rem 2.25rem;
+    padding: 1rem 3.5rem;
+    width: 100%;
     border: none;
     border-radius: 5px;
 }
 
-.search-btn{
+.search-area{
+    width: 100%;
+}
+
+/* .search-btn{
     padding: 0.5rem 1rem;
     background-color: var(--white2);
     border-radius: 5px;
-}
+} */
 
 .search-btn:hover, .search-btn:active {
     background-color: var(--black);
@@ -464,10 +470,12 @@ margin-right: 0.5rem;
 }
 
 .pagination {
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     grid-column: span 2;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
+    margin-top: 0.2rem;
+
 }
 
 .flex{
@@ -480,6 +488,8 @@ margin-right: 0.5rem;
 .market-rank{
     cursor: pointer;
 }
+
+
 
 
 
@@ -622,9 +632,14 @@ margin-right: 0.5rem;
 /* ----- Index Page ----- */
 
 /* News Section */
-.index-container, .news-main-container{
+.index-container, .news-main-container, .header{
     width: 37.5rem;
     margin: auto auto;
+}
+
+.header{
+    margin-left: 0;
+    margin-right: 0;
 }
 
 .header h1{
@@ -701,10 +716,12 @@ margin-right: 0.5rem;
 
 /* ----- News Page ----- */
 
-.main-btn{
+.greetings .main-btn {
     padding: 20px 20px 15px 20px;
+    color: red;
 
 }
+
 
 /* Filter */
 
@@ -786,9 +803,14 @@ svg{
 
 /* News Feature */
 
-.index-container, .trending-container, .market{
+.index-container, .trending-container, .market, .header{
     width: 50rem;
 
+}
+
+.header{
+    margin-left: 0;
+    margin-right: 0;
 }
 
 .header h1{
@@ -870,7 +892,7 @@ svg{
 
     /* News Feature */
     
-    .index-container, .trending-container, .market, .greetings, .news-main-container{
+    .index-container, .trending-container, .market, .greetings, .news-main-container, .header{
         width: 60rem;
     }
 }
