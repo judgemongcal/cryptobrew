@@ -10,7 +10,7 @@ const trendingContainer = document.querySelector('.trending-container');
 const marketContainer = document.querySelector('.market-container');
 const marketResultContainer = document.querySelector('.market-result');
 const sortArrow = document.querySelector('.market-rank');
-const sortIcon = document.querySelector('#arrow-sort');
+const sortIcon = document.querySelector('.arrow-sort');
 const search = document.querySelector('#search-query');
 const pagination = document.querySelector('.pagination');
 const spinners = document.querySelectorAll('.spinner');
@@ -557,7 +557,6 @@ const initMarketModal = () => {
 const showMarketModal = async (coinId)  => {
   const data = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}`);
   const res = await data.json();
-  console.log(res);
   modalEl.innerHTML = '';
   const div = document.createElement('div');
 
@@ -658,6 +657,9 @@ const init = () => {
 
 
 document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('click', function (e) {
+  console.log(e.target);
+})
 
 
 
