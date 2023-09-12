@@ -909,7 +909,28 @@ svg{
 }
 
 
+/* ----- API Error ----- */
 
+.api-error{
+    margin: 4rem auto;
+    display: none;
+    flex-direction: column;
+    text-align: center;
+    width: 25rem;
+  }
+
+  .api-error h1{
+    color: var(--primary3);
+    font-size: 3rem;
+  }
+
+  .api-error p{
+    font-size: 1.5rem;
+  }
+
+  /* .news-error, .trending-error, .market-error{
+    display: flex;
+  } */
 
 
 /* ------- Spinner ------- */

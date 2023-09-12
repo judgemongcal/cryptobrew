@@ -14,7 +14,9 @@ const sortIcon = document.querySelector('.arrow-sort');
 const search = document.querySelector('#search-query');
 const pagination = document.querySelector('.pagination');
 const spinners = document.querySelectorAll('.spinner');
-const apiError = document.querySelector('.api-error');
+const newsError = document.querySelector('.news-error');
+const trendingError = document.querySelector('.trending-error');
+const marketError = document.querySelector('.market-error');
 // let global.market_archive = [];
 const today = new Date();
 
@@ -56,17 +58,6 @@ const hideSpinner = () => {
 };
 
 
-// Toggle Error Message
-
-const showError = () => {
-  apiError.style.display = 'flex';
-}
-
-const hideError = () => {
-  apiError.style.display = 'none';
-}
-
-
 
 // Fetch News API
 const newsAPIkey = 'Mt0V4THOHF3RqwmodajlbaijTAdVUS2r'; /* NY Times API */
@@ -77,7 +68,9 @@ const getNews = async () => {
   try{
     data = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?&api-key=${global.newsApi.apiKey}&fq=_id:("${global.news_id}")`);
     if(!data.ok){
-      showError();
+      newsError.style.display = 'flex';
+      resetNews();
+      hideSpinner();
       throw new Error('Problem with Fetch. Try again after a few minutes.');
 
     }
@@ -90,7 +83,7 @@ const getNews = async () => {
   try{
     data = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=crypto-currency&sort=${global.sorting}&api-key=${global.newsApi.apiKey}&begin_date=${global.startDate}&end_date=${global.endDate}&page=${global.currentPage}`);
     if(!data.ok){
-      showError();
+      newsError.style.display = 'flex';
       resetNews();
       hideSpinner();
       throw new Error('Problem with Fetch. Try again after a few minutes.');
@@ -365,25 +358,52 @@ const getCoins = async () => {
   let marketCoins = '', marketRes ='';
     switch(global.currentPath){
       case '/index.html':
+        // Trending
+        let trendingData;
+        let btcPrice;
         try{
-          const trendingData = await fetch('https://api.coingecko.com/api/v3/search/trending');
+          trendingData = await fetch('https://api.coingecko.com/api/v3/search/trending');
           if(!trendingData.ok){
-            showError();
-            resetNews();
+            throw new Error('Problem with Fetch. Try again after a few minutes.');
+          }
+        } catch(error){
+          trendingError.style.display = 'flex';
+          marketError.style.display = 'flex';
+          console.error('There was an error with the API: ', error);
+        }
+        
+        const trendingRes = await trendingData.json();
+    
+        try{
+          btcPrice = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+          if(!btcPrice.ok){
             hideSpinner();
             throw new Error('Problem with Fetch. Try again after a few minutes.');
       
           }
         } catch(error){
-          console.error('There was an error', error);
+          console.log('trending btc not working');
+          console.error('There was an error with the API: ', error);
         }
        
-        const trendingRes = await trendingData.json();
-    
-        const btcPrice = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
         const price = await btcPrice.json();
     
-        marketCoins = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${global.market_currency}&order=market_cap_${global.market_order}&per_page=10&page=${global.market_page}`);
+
+
+        // Market
+
+
+        try{
+          marketCoins = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${global.market_currency}&order=market_cap_${global.market_order}&per_page=10&page=${global.market_page}`);
+          if(!marketCoins.ok){
+            throw new Error('Problem with Fetch. Try again after a few minutes.');
+          }
+        } catch(error){
+          trendingError.style.display = 'flex';
+          marketError.style.display = 'flex';
+          console.error('There was an error with the API: ', error);
+        }
+        
         marketRes = await marketCoins.json();
 
         displayTrending(trendingRes, price);
@@ -392,7 +412,18 @@ const getCoins = async () => {
 
       case '/market.html':
         if(global.market_archive.length === 0){
-          marketCoins = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${global.market_currency}&order=market_cap_${global.market_order}&per_page=500`);
+
+          try{
+            marketCoins = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${global.market_currency}&order=market_cap_${global.market_order}&per_page=500`);
+            if(!marketCoins.ok){
+              throw new Error('Problem with Fetch. Try again after a few minutes.');
+            }
+          } catch(error){
+            marketError.style.display = 'flex';
+            hideSpinner();
+            console.error('There was an error with the API: ', error);
+          }
+
           marketRes = await marketCoins.json();
           global.market_archive = marketRes;
           displayMarket(marketRes);
@@ -703,8 +734,6 @@ const init = () => {
 
 
 document.addEventListener('DOMContentLoaded', init);
-
-
 
 
 
