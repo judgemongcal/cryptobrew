@@ -386,7 +386,7 @@ const displayTrending = (trending, btc) => {
 
 // Display Market View to DOM
 const displayMarket = (market) => { 
-  
+  hideSpinner();
   let marketLength = market.length;
   if(global.currentPath === '/market.html'){
     switch(global.market_btn_action){
@@ -404,7 +404,7 @@ const displayMarket = (market) => {
     }
    
   }
-    hideSpinner();
+    
     for(let i = global.market_lastIndex; i < marketLength; i++){
       const div = document.createElement('div');
       const change24H = market[i].price_change_percentage_24h? parseInt(market[i].price_change_percentage_24h) : 'N/A';
@@ -432,6 +432,7 @@ const displayMarket = (market) => {
       marketResultContainer.appendChild(div);
       global.market_lastIndex++;
     };
+
     if(marketLength == global.market_archive.length){
       global.market_isLastPage = true;
     } else if(marketLength <= 10){
