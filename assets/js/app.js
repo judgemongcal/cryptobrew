@@ -13,6 +13,7 @@ const sortArrow = document.querySelector('.market-rank');
 const sortIcon = document.querySelector('#arrow-sort');
 const search = document.querySelector('#search-query');
 const pagination = document.querySelector('.pagination');
+const spinners = document.querySelectorAll('.spinner');
 // let global.market_archive = [];
 const today = new Date();
 
@@ -37,6 +38,21 @@ const global = {
   market_btn_action: 'start',
   market_archive: []
 };
+
+// Toggle Spinner
+
+const showSpinner = () => {
+  spinners.forEach((spinner) => {
+    spinner.style.display = 'auto';
+  })
+  
+}
+
+const hideSpinner = () => {
+  spinners.forEach((spinner) => {
+    spinner.style.display = 'none';
+  })
+}
 
 
 
@@ -99,7 +115,7 @@ const displayNews = async (result) => {
             <p id="news-summary">${source[i].abstract}</p>
         </div>
           `;
-      
+        hideSpinner();
         indexNewsSlide.appendChild(div);
         break;
 
@@ -115,6 +131,7 @@ const displayNews = async (result) => {
               <p id="news-summary">${source[i].abstract}</p>
           </div>
         `;
+        hideSpinner();
         newsPageContainer.appendChild(div);
         break;
     };
@@ -179,6 +196,7 @@ const newestFirst = async () => {
   const res = await getNews();
   global.currentPage = 0;
   resetNews();
+  showSpinner();
   displayNews(res);
 }
 
@@ -187,6 +205,7 @@ const oldestFirst = async () => {
   const res = await getNews();
   global.currentPage = 0;
   resetNews();
+  showSpinner();
   displayNews(res);
 }
 
@@ -197,6 +216,7 @@ const showNextNews = async () => {
   const res = await getNews();
   if(res.response.docs.length === 0) return;
   resetNews();
+  showSpinner();
   displayNews(res);
   checkButtons();
   
@@ -207,6 +227,7 @@ const showPrevNews = async () => {
   if(global.currentPage < 0) return;
   const res = await getNews();
   resetNews();
+  showSpinner();
   displayNews(res);
   checkButtons();
 }
@@ -357,7 +378,8 @@ const displayTrending = (trending, btc) => {
             }</p>
       <p>Market Cap Rank: <span id="heavy">${trending.coins[i].item.market_cap_rank}</span></p>
     </div>
-    `
+    `;
+    hideSpinner();
     trendingContainer.appendChild(div);
   }
 }
@@ -382,7 +404,7 @@ const displayMarket = (market) => {
     }
    
   }
-
+    hideSpinner();
     for(let i = global.market_lastIndex; i < marketLength; i++){
       const div = document.createElement('div');
       const change24H = market[i].price_change_percentage_24h? parseInt(market[i].price_change_percentage_24h) : 'N/A';
@@ -429,6 +451,7 @@ const sortMarket = () => {
   global.market_btn_action = 'sort';
   global.market_archive.reverse();
   resetMarket();
+  showSpinner();
   rotateSortBtn();
   getCoins();
   checkButtons();
@@ -462,6 +485,7 @@ const showNextMarketPage = () => {
     global.market_btn_action = 'next';
     global.market_isFirstPage = false;
     resetMarket();
+    showSpinner();
     getCoins();
     checkButtons();
     updatePagination();
@@ -479,6 +503,7 @@ const showPrevMarketPage = () => {
   } else{
     global.market_btn_action = 'prev';
     resetMarket();
+    showSpinner();
     getCoins();
     checkButtons();
     updatePagination();
@@ -632,6 +657,7 @@ const init = () => {
 
 
 document.addEventListener('DOMContentLoaded', init);
+
 
 
 
