@@ -21,7 +21,7 @@ const marketError = document.querySelector('.market-error');
 const today = new Date();
 
 const global = {
-  currentPath: window.location.href,
+  currentPath: window.location.pathname,
   currentPage: 0,
   news_id: '',
   sorting: 'newest',
