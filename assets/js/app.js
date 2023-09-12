@@ -14,6 +14,7 @@ const sortIcon = document.querySelector('.arrow-sort');
 const search = document.querySelector('#search-query');
 const pagination = document.querySelector('.pagination');
 const spinners = document.querySelectorAll('.spinner');
+const apiError = document.querySelector('.api-error');
 // let global.market_archive = [];
 const today = new Date();
 
@@ -44,14 +45,25 @@ const global = {
 const showSpinner = () => {
   spinners.forEach((spinner) => {
     spinner.style.display = 'auto';
-  })
+  });
   
-}
+};
 
 const hideSpinner = () => {
   spinners.forEach((spinner) => {
     spinner.style.display = 'none';
-  })
+  });
+};
+
+
+// Toggle Error Message
+
+const showError = () => {
+  apiError.style.display = 'flex';
+}
+
+const hideError = () => {
+  apiError.style.display = 'none';
 }
 
 
@@ -62,10 +74,31 @@ const newsAPIkey = 'Mt0V4THOHF3RqwmodajlbaijTAdVUS2r'; /* NY Times API */
 const getNews = async () => {
   let data;
  if(global.news_id){
-  data = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?&api-key=${global.newsApi.apiKey}&fq=_id:("${global.news_id}")`);
+  try{
+    data = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?&api-key=${global.newsApi.apiKey}&fq=_id:("${global.news_id}")`);
+    if(!data.ok){
+      showError();
+      throw new Error('Problem with Fetch. Try again after a few minutes.');
+
+    }
+  } catch(error){
+    console.error('There was an error with the API: ', error);
+  }
+
 
  } else{
-  data = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=crypto-currency&sort=${global.sorting}&api-key=${global.newsApi.apiKey}&begin_date=${global.startDate}&end_date=${global.endDate}&page=${global.currentPage}`);
+  try{
+    data = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=crypto-currency&sort=${global.sorting}&api-key=${global.newsApi.apiKey}&begin_date=${global.startDate}&end_date=${global.endDate}&page=${global.currentPage}`);
+    if(!data.ok){
+      showError();
+      resetNews();
+      hideSpinner();
+      throw new Error('Problem with Fetch. Try again after a few minutes.');
+
+    }
+  } catch(error){
+    console.error('There was an error', error);
+  }
 
  }
   const result = await data.json();
@@ -75,6 +108,7 @@ const getNews = async () => {
     global.isLastPage = false;
   }
   return result;
+
 };
 
 
@@ -331,7 +365,19 @@ const getCoins = async () => {
   let marketCoins = '', marketRes ='';
     switch(global.currentPath){
       case '/index.html':
-        const trendingData = await fetch('https://api.coingecko.com/api/v3/search/trending');
+        try{
+          const trendingData = await fetch('https://api.coingecko.com/api/v3/search/trending');
+          if(!trendingData.ok){
+            showError();
+            resetNews();
+            hideSpinner();
+            throw new Error('Problem with Fetch. Try again after a few minutes.');
+      
+          }
+        } catch(error){
+          console.error('There was an error', error);
+        }
+       
         const trendingRes = await trendingData.json();
     
         const btcPrice = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
@@ -657,9 +703,6 @@ const init = () => {
 
 
 document.addEventListener('DOMContentLoaded', init);
-document.addEventListener('click', function (e) {
-  console.log(e.target);
-})
 
 
 

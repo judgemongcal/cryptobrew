@@ -902,6 +902,10 @@ svg{
     .index-container, .trending-container, .market, .greetings, .news-main-container, .header{
         width: 60rem;
     }
+
+    .api-error {
+        width: 40rem;
+    }
 }
 
 
