@@ -126,7 +126,7 @@ const displayNews = async (result) => {
     const div = document.createElement('div');
 
     switch(global.currentPath){
-      case '/index.html': 
+      case '/': 
     
           div.classList.add('swiper-slide');
           div.innerHTML = `
@@ -146,7 +146,7 @@ const displayNews = async (result) => {
         indexNewsSlide.appendChild(div);
         break;
 
-      case '/news.html':
+      case '/news':
           div.classList.add('news-card', 'shadow-1');
         div.innerHTML = `
           <div class="news-details" id="${source[i].uri}">
@@ -261,7 +261,7 @@ const showPrevNews = async () => {
 
 const checkButtons = () => {
   switch(global.currentPath){
-    case '/news.html':
+    case '/news':
       // Prev Button
     if(global.currentPage === 0){
     prevBtn.disabled = true;
@@ -282,7 +282,7 @@ const checkButtons = () => {
     break;
 
 
-    case '/market.html':
+    case '/market':
      // Prev Button
     if(global.market_isFirstPage){
     prevBtn.disabled = true;
@@ -322,11 +322,11 @@ const initIndexModal = () => {
 
 const showNewsModal = async (e) => {
   switch(global.currentPath){
-    case '/index.html':
+    case '/':
       global.news_id = e.id;
       break;
 
-    case '/news.html':
+    case '/news':
       e.target.id.includes('nyt')? global.news_id = e.target.id :
       global.news_id = e.target.parentElement.id;
       break;
@@ -357,7 +357,7 @@ const exitModal = () => {
 const getCoins = async () => {
   let marketCoins = '', marketRes ='';
     switch(global.currentPath){
-      case '/index.html':
+      case '/':
         // Trending
         let trendingData;
         let btcPrice;
@@ -410,7 +410,7 @@ const getCoins = async () => {
         displayMarket(marketRes);
         break;
 
-      case '/market.html':
+      case '/market':
         if(global.market_archive.length === 0){
 
           try{
@@ -689,7 +689,7 @@ const init = () => {
   switch(global.currentPath) {
 
     // Index Page
-    case '/index.html': 
+    case '/': 
       updateGreetings();
       displayNews(getNews());
       getCoins();
@@ -699,7 +699,7 @@ const init = () => {
       break;
 
     // News Page
-    case '/news.html': 
+    case '/news': 
       updateGreetings();
       displayNews(getNews());
       newsNewestBtn.addEventListener('click', newestFirst);
@@ -712,7 +712,7 @@ const init = () => {
       break;
 
       // Market Page
-      case '/market.html':
+      case '/market':
       updateGreetings();
       initModalExit();
       initMarketModal();
