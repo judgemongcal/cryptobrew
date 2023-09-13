@@ -382,7 +382,8 @@ const getCoins = async () => {
       
           }
         } catch(error){
-          console.log('trending btc not working');
+          trendingError.style.display = 'flex';
+          marketError.style.display = 'flex';
           console.error('There was an error with the API: ', error);
         }
        
@@ -438,7 +439,6 @@ const getCoins = async () => {
 // Display Trending Coins to DOM
 const displayTrending = (trending, btc) => {
   const btcPrice = btc.bitcoin.usd;
-  console.log(trending);
   for(let i = 0; i < trending.coins.length; i++){
     const div = document.createElement('div');
     div.classList.add(`grid-card`,`grid-${i+1}`, `shadow-1`);
@@ -613,7 +613,6 @@ const updatePagination = () => {
 
 const initMarketModal = () => {
   document.addEventListener('click', function(e){
-    console.log(e.target);
     if(e.target.id){
       showMarketModal(e.target.id);
     }else if(e.target.parentElement.id){
