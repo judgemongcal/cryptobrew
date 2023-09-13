@@ -465,7 +465,7 @@ const displayTrending = (trending, btc) => {
 const displayMarket = (market) => { 
   hideSpinner();
   let marketLength = market.length;
-  if(global.currentPath === '/market.html'){
+  if(global.currentPath === '/market'){
     switch(global.market_btn_action){
       case 'next':
         marketLength = global.market_lastIndex + 10;
