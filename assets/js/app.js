@@ -619,9 +619,7 @@ const initMarketModal = () => {
     }else if(e.target.parentElement.id){
      showMarketModal(e.target.parentElement.id);
     }else if(e.target.children[1]) {
-        if(e.target.children[1].children[1].id){
-          showMarketModal(e.target.children[1].children[1].id);
-        }
+      showMarketModal(e.target.children[1].id);
     }else if(e.target.parentElement.parentElement.id){
       showMarketModal(e.target.parentElement.parentElement.id);
     }else if(e.target.classList.contains('coin-img') || e.target.classList.contains('coin-details')){
